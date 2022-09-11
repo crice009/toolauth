@@ -1,0 +1,14 @@
+<head>
+    <!doctype html>
+    <title>find-keys</title>
+</head>
+
+<body>
+    <h1>Found the Keys!</h1>
+    {% for service in list %}
+    <div>
+        <p>{{ service.name }} key: <b>{{ service.key }}</b></p>
+    </div>
+    {% endfor %}
+    <p>Now go put these in the YAML file "easierthanadb.yaml"</p>
+</body>

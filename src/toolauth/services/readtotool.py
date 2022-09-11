@@ -9,6 +9,7 @@ async def reader_to_listed_tools(device_name, card_uid, member_name, member_uid,
     
     with open(path, 'r') as file:           
         pairings = yaml.safe_load(file)
+        devices = []
         for n in pairings:
             if n['reader']['name'] == reader_name:
                 devices = n['devices']
