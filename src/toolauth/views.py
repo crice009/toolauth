@@ -1,9 +1,8 @@
 from toolauth.services.readtotool import reader_to_listed_tools
 from toolauth.services.authorized import authreq
-from toolauth.services.esphome_api import find_the_keys
 from dataclasses import dataclass
 
-from quart import Quart, request, jsonify, abort, g, render_template
+from quart import Quart, request, jsonify, abort, g
 from quart_schema import QuartSchema, validate_request, validate_response
 from toolauth import app
 import sqlite3  # currently unused, but would like to...
@@ -85,17 +84,6 @@ async def new_esphome():
 async def new_membercard():
     # probably need a dedicated cardreader and ?websockets to make this easy
     return "This will assign a new card to the member, one day"
-
-
-@app.get("/findkeys/<string:dname>")
-async def foundkeys(dname):
-    try:
-        list = await find_the_keys(dname)
-        # check this out: https://github.com/pawansingh126/yaml_editor
-        return await render_template("find_keys.html", services=list)
-    except Exception as e:
-        print(e, file=sys.stderr)
-        return abort(500, "Could not connect to ESPHome device. Check network and spelling in your URL.")
 
 
 @app.post("/authreq")

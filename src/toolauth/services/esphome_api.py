@@ -7,15 +7,15 @@ import sys
 
 async def device_enable(device_name, card_uid, member_uid, member_name, session_uid) -> None:
     print("made it to device_enable()", file=sys.stdout)
-    path = os.path.dirname(os.path.realpath(__file__))
-    path = os.path.join(path, 'easierthanadb.yaml')
-    with open(path, 'r') as file:  # easierthanadb.yaml (only while testing)
-        keys = yaml.safe_load(file)  # easierthanadb.yaml (only while testing)
-        for k in keys:  # easierthanadb.yaml (only while testing)
-            # easierthanadb.yaml (only while testing)
-            if k['device'] == device_name:
-                # easierthanadb.yaml (only while testing)
-                auth_enable_key = k['auth_enable_key']
+    # path = os.path.dirname(os.path.realpath(__file__))
+    # path = os.path.join(path, 'easierthanadb.yaml')
+    # with open(path, 'r') as file:  # easierthanadb.yaml (only while testing)
+    #     keys = yaml.safe_load(file)  # easierthanadb.yaml (only while testing)
+    #     for k in keys:  # easierthanadb.yaml (only while testing)
+    #         # easierthanadb.yaml (only while testing)
+    #         if k['device'] == device_name:
+    #             # easierthanadb.yaml (only while testing)
+    #             auth_enable_key = k['auth_enable_key']
 
     api = APIClient(
         address=device_name.strip()+".local",
@@ -26,11 +26,12 @@ async def device_enable(device_name, card_uid, member_uid, member_name, session_
     await api.connect(login=True)
 
     # List all entities of the device
-    entities = await api.list_entities_services()
+    entities, user_services = (await api.list_entities_services())
     # < this is brilliant, but there is also an 'other_picked' service
-    user_services = [e for e in entities[1] if e.name == "auth_enable"]
-    auth_enable_service = user_services[0] if user_services else None
-    auth_enable_key = auth_enable_service.key if auth_enable_service else 0
+    services = dict((s.name, s) for s in user_services)
+    service_keys = dict((s.name, s.key) for s in user_services)
+    auth_enable_key = service_keys.get("auth_enable", 0)
+    # other_picked_key = service_keys.get("other_picked", 0)
 
     # -------------------------------------------------------------------------------------------
     # need this:
@@ -58,19 +59,3 @@ async def device_enable(device_name, card_uid, member_uid, member_name, session_
         print(e, file=sys.stderr)
         return device_name
     # -------------------------------------------------------------------------------------------
-
-
-async def find_the_keys(device_name) -> list:
-    api = APIClient(
-        address=device_name.strip()+".local",# <----------------------------| will be unique for each tool controller
-        port=6053,  # <--------------------------------------------------------| will probably be the same for all ESP32s
-        password="", # <------------------------------------------------------| Don't think we'll use this
-        # <---------| will be the same for all ESP32s (in secret.yaml)
-        noise_psk="7NuG+LMZHTgyWCblaZnvn03acjyDnYYJz01BScw3eHM=",
-    )
-    await api.connect(login=True)
-
-    # List all entities of the device
-    entities = await api.list_entities_services()
-    print(entities[1], file=sys.stdout)
-    return entities[1]

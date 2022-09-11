@@ -21,9 +21,9 @@
       id: 18902 #probably the MAC address
       
 - reader:
-    name: "jointer"
+    name: "door"
     id: "0CB815B98E3C" #probably the MAC address
   devices:
     #list all connected devices here, even if it is 1:1
-    - name: "jointer"
+    - name: "door"
       id: "0CB815B98E3C" #probably the MAC address
