@@ -1,0 +1,3 @@
+jointer:
+  auth_enable_key: 12345
+  other_picked_key: 45678

@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "toolauth"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "toolauth", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+quart = "^0.18.0"
+quart-schema = "^0.13.0"
+aioesphomeapi = "^10.13.0"
+db-sqlite3 = "^0.0.1"
+PyYAML = "^6.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest-asyncio = "^0.19.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+start = "toolauth:run"

@@ -1,0 +1,29 @@
+#list of all pairings between RFID card readers and the device(s) they enable
+
+#a new reader entry for each of the readers
+- reader:
+    name: "test1"
+    id: 12345 #probably the MAC address
+  devices:
+    #list all connected devices here, even if it is 1:1
+    - name: "jointer"
+      id: 56789 #probably the MAC address
+    - name: "tablesaw"
+      id: 89012 #probably the MAC address
+
+- reader:
+    name: "test2"
+    id: 23451 #probably the MAC address
+  devices:
+    - name: "bridgeport"
+      id: 67895 #probably the MAC address
+    - name: "bandsaw"
+      id: 18902 #probably the MAC address
+      
+- reader:
+    name: "test3"
+    id: 12345 #probably the MAC address
+  devices:
+    #list all connected devices here, even if it is 1:1
+    - name: "door"
+      id: 56789 #probably the MAC address
