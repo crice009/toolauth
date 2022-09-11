@@ -87,7 +87,7 @@ async def new_membercard():
     return "This will assign a new card to the member, one day"
 
 
-@app.route("/findkeys/<string:dname>", methods=["GET", "POST"])
+@app.get("/findkeys/<string:dname>")
 async def foundkeys(dname):
     try:
         list = await find_the_keys(dname)
