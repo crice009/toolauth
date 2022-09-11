@@ -8,5 +8,5 @@ QuartSchema(app)
 
 from toolauth import views
 
-def run() -> None:
+def run(host='0.0.0.0') -> None:
     app.run()

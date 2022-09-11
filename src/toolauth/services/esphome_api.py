@@ -6,6 +6,7 @@ import sys
 
 
 async def device_enable(device_name, card_uid, member_uid, member_name, session_uid) -> None:
+    print("made it to device_enable()", file=sys.stdout)
     path = os.path.dirname(os.path.realpath(__file__))
     path = os.path.join(path, 'easierthanadb.yaml')
     with open(path, 'r') as file:  # easierthanadb.yaml (only while testing)
@@ -19,8 +20,8 @@ async def device_enable(device_name, card_uid, member_uid, member_name, session_
     api = APIClient(
         address=device_name.strip()+".local",
         port=6053,
-        password=os.environ.get("ESPHOME_PASSWORD"),
-        noise_psk=os.environ.get("ESPHOME_NOISE_PSK"),
+        password="",
+        noise_psk="7NuG+LMZHTgyWCblaZnvn03acjyDnYYJz01BScw3eHM=",
     )
     await api.connect(login=True)
 
@@ -63,8 +64,9 @@ async def find_the_keys(device_name) -> list:
     api = APIClient(
         address=device_name.strip()+".local",# <----------------------------| will be unique for each tool controller
         port=6053,  # <--------------------------------------------------------| will probably be the same for all ESP32s
-        password=os.environ.get("ESPHOME_PASSWORD"), # <------------------------------------------------------| Don't think we'll use this
-        noise_psk=os.environ.get("ESPHOME_NOISE_PSK"),# <---------| will be the same for all ESP32s (in secret.yaml)
+        password="", # <------------------------------------------------------| Don't think we'll use this
+        # <---------| will be the same for all ESP32s (in secret.yaml)
+        noise_psk="7NuG+LMZHTgyWCblaZnvn03acjyDnYYJz01BScw3eHM=",
     )
     await api.connect(login=True)
 
