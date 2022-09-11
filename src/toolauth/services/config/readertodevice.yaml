@@ -25,5 +25,5 @@
     id: "0CB815B98E3C" #probably the MAC address
   devices:
     #list all connected devices here, even if it is 1:1
-    - name: "jointer" #this is a hack, to make the first demo work
+    - name: "door" #this is a hack, to make the first demo work
       id: "0CB815B98E3C" #probably the MAC address
