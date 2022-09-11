@@ -1,3 +1,4 @@
+from quart import abort
 import urllib.request, json
 import os
 
@@ -32,4 +33,4 @@ async def ask_drupal(device_name, card_uid):
         member_uid = drupal_response[0]["uid"]
         return member_uid
     else:
-        return False #member not authorized for tool
+        return abort(403, "Member not Authorized for use of this device.") #forbidden HTTP message

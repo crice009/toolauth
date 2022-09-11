@@ -1,4 +1,5 @@
 from toolauth.services.esphome_api import device_enable
+from quart import abort
 import yaml
 import os 
 
@@ -17,7 +18,8 @@ async def reader_to_listed_tools(device_name, card_uid, member_name, member_uid,
         device_name = d['name']
         device_uid = d['id']
         resp = await device_enable(device_name, card_uid, member_uid, member_name, session_uid)
-        # if resp: err_catch.append(resp)
+        if resp: err_catch.append(resp)
     
     if len(err_catch)>=1: 
-        raise Exception(err_catch) #could not reach ESPHome device
+        return abort(500, "Could not connect to ESPHome device. Check network and config files.") 
+        # would be nice if we could report the good & bad esphome conenctions here

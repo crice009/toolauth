@@ -108,11 +108,10 @@ async def authorization_request(data: AuthReqIn):
                 session_uid)
         
             return "Hello Auth" 
-        else:
-            return abort(403, "Member not Authorized for use of this device.") #forbidden HTTP message
     except Exception as e: 
+        print(e, file=sys.stderr) 
         return abort(500, "Could not connect to ESPHome device. Check network and config files.") 
-        #would be nice if we could report the good & bad esphome conenctions here
+        # would be nice if we could report the good & bad esphome conenctions here
         
     
 @app.post("/session")
