@@ -24,7 +24,7 @@ async def device_enable(device_name, card_uid, member_uid, member_name, session_
     try:
         await api.connect(login=True)
     except:
-        raise Exception("Could not connect to "+ device_name)
+        raise Exception("Could not connect to ESPHome device: "+device_name+" During ESPHome auth_enable Native API call.")
 
     # List all entities of the device
     entities, user_services = (await api.list_entities_services())
@@ -75,7 +75,7 @@ async def other_picked(device_name) -> None:
     try:
         await api.connect(login=True)
     except:
-        raise Exception("Could not connect to " + device_name)
+        raise Exception("Could not connect to ESPHome device: "+device_name+" During ESPHome other_picked Native API call.")
 
     # List all UserService's of the device
     entities, user_services = (await api.list_entities_services())
