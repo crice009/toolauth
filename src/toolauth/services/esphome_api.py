@@ -1,12 +1,10 @@
 from aioesphomeapi.client import APIClient
 from aioesphomeapi.model import UserService, UserServiceArg, UserServiceArgType
-import yaml  # easierthanadb.yaml (only while testing)
-import os
 import sys
 
 
 async def device_enable(device_name, card_uid, member_uid, member_name, session_uid) -> None:
-    print("made it to device_enable()", file=sys.stdout)
+    # print("made it to device_enable()", file=sys.stdout)
     # path = os.path.dirname(os.path.realpath(__file__))
     # path = os.path.join(path, 'easierthanadb.yaml')
     # with open(path, 'r') as file:  # easierthanadb.yaml (only while testing)
@@ -23,7 +21,10 @@ async def device_enable(device_name, card_uid, member_uid, member_name, session_
         password="",
         noise_psk="7NuG+LMZHTgyWCblaZnvn03acjyDnYYJz01BScw3eHM=",
     )
-    await api.connect(login=True)
+    try:
+        await api.connect(login=True)
+    except:
+        raise Exception("Could not connect to "+ device_name)
 
     # List all entities of the device
     entities, user_services = (await api.list_entities_services())
@@ -56,6 +57,38 @@ async def device_enable(device_name, card_uid, member_uid, member_name, session_
     try:
         await api.execute_service(service, data)
         return
+    except Exception as e:
+        print(e, file=sys.stderr)
+        return device_name
+    # -------------------------------------------------------------------------------------------
+
+
+async def other_picked(device_name) -> None:
+    print("made it to other_picked()", file=sys.stdout)
+
+    api = APIClient(
+        address=device_name.strip()+".local",
+        port=6053,
+        password="",
+        noise_psk="7NuG+LMZHTgyWCblaZnvn03acjyDnYYJz01BScw3eHM=",
+    )
+    try:
+        await api.connect(login=True)
+    except:
+        raise Exception("Could not connect to " + device_name)
+
+    # List all UserService's of the device
+    entities, user_services = (await api.list_entities_services())
+    service_keys = dict((s.name, s.key) for s in user_services)
+    other_picked_key = service_keys.get("other_picked", 0)
+
+    # define the service to be contacted
+    service = UserService(name="other_picked", key=other_picked_key, args=[])
+    data = {}
+
+    try:
+        await api.execute_service(service, data)
+        return #everything worked
     except Exception as e:
         print(e, file=sys.stderr)
         return device_name

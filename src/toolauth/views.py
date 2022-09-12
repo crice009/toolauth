@@ -1,11 +1,14 @@
+from toolauth import app
 from toolauth.services.readtotool import reader_to_listed_tools
 from toolauth.services.authorized import authreq
+from toolauth.services.esphome_api import other_picked
 from toolauth.data import *
 
 from quart import Quart, request, jsonify, abort, g
 from quart_schema import QuartSchema, validate_request, validate_response
-from toolauth import app
+
 import sqlite3  # currently unused, but would like to...
+from uuid import uuid4
 import sys
 
 # ---------------------------------------------------------------------------------------------------
@@ -33,7 +36,7 @@ async def authorization_request(data: AuthReqIn):
             reader_name = data.get("reader_name").strip()
             # some kind of ID number for card reader
             reader_uid = data.get("reader_uid").strip()
-            session_uid = 1  # would be great if a database generated these
+            session_uid = uuid4().int  # would be great if a database generated these
 
             await reader_to_listed_tools(
                 device_name,
@@ -47,10 +50,17 @@ async def authorization_request(data: AuthReqIn):
             return "Hello Auth"
     except Exception as e:
         print(e, file=sys.stderr)
-        return e #abort(500, "Could not connect to ESPHome device. Check network and config files.")
-        # would be nice if we could report the good & bad esphome conenctions here
+        return abort(500, e)
 
 
+@app.post("/otherpicked")               #server testing only
+async def otherpicked():                #server testing only
+    d = await request.json              #server testing only
+    device_name = d['device_name']      #server testing only
+    await other_picked(device_name)     #server testing only
+    return "other was picked"           #server testing only
+
+#needs much more definition for the long-term loggging
 @app.post("/session")
 @validate_request(SessionIn)
 async def session_handler(data: SessionIn):

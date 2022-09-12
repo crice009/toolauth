@@ -1,4 +1,4 @@
-from toolauth import app, TodoIn
+from toolauth import app
 
 async def test_authreq() -> None:
     test_client = app.test_client()
