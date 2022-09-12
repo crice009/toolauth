@@ -36,4 +36,4 @@ async def ask_drupal(device_name, card_uid):
         member_uid = int(drupal_response[0]["uid"])
         return member_uid
     else:
-        return abort(403, "Member not Authorized for use of this device.") #forbidden HTTP message
+        return abort(403, "Member not Authorized for use of "+device_name+" device.") #forbidden HTTP message

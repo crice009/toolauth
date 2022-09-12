@@ -31,6 +31,7 @@ async def device_enable(device_name, card_uid, member_uid, member_name, session_
     # < this is brilliant, but there is also an 'other_picked' service
     services = dict((s.name, s) for s in user_services)
     service_keys = dict((s.name, s.key) for s in user_services)
+    print("Service Keys for "+device_name+": "+service_keys, file=sys.stdout)
     auth_enable_key = service_keys.get("auth_enable", 0)
     # other_picked_key = service_keys.get("other_picked", 0)
 
@@ -80,6 +81,7 @@ async def other_picked(device_name) -> None:
     # List all UserService's of the device
     entities, user_services = (await api.list_entities_services())
     service_keys = dict((s.name, s.key) for s in user_services)
+    print("Service Keys for "+device_name+": "+service_keys, file=sys.stdout)
     other_picked_key = service_keys.get("other_picked", 0)
 
     # define the service to be contacted

@@ -17,7 +17,6 @@ async def reader_to_listed_tools(device_name, card_uid, member_name, member_uid,
 
         if len(devices) < 1:
             raise Exception("Did not find requested reader/device pair in YAML config. Reader: " + reader_name+" | Device: "+device_name)
-            # return abort(500, "Did not find requested reader or device in YAML config.")
     
     err_catch=[]
     for d in devices:
@@ -28,5 +27,3 @@ async def reader_to_listed_tools(device_name, card_uid, member_name, member_uid,
     
     if len(err_catch)>=1: 
         raise Exception("Could not connect to ESPHome device: "+err_catch[0]+" and possibly more. Check network and config files.")
-        # return abort(500, "Could not connect to ESPHome device. Check network and config files.") 
-        # would be nice if we could report the good & bad esphome conenctions here
