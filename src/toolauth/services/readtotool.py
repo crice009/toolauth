@@ -13,6 +13,9 @@ async def reader_to_listed_tools(device_name, card_uid, member_name, member_uid,
         for n in pairings:
             if n['reader']['name'] == reader_name:
                 devices = n['devices']
+
+        if len(devices) < 1:
+            return abort(500, "Did not find requested reader or device in YAML config.")
     
     err_catch=[]
     for d in devices:

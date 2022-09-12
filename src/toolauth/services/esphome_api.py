@@ -52,6 +52,7 @@ async def device_enable(device_name, card_uid, member_uid, member_name, session_
         ],
     )
     data = {"member_name": member_name, "member_uid": member_uid,"card_uid": card_uid, "session_uid": session_uid}
+    
     try:
         await api.execute_service(service, data)
         return

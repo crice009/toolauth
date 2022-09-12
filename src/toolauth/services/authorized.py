@@ -23,6 +23,9 @@ async def ask_drupal(device_name, card_uid):
     #drupal6 is the current card system, so work with that
     # https://www.makehaven.org/api/v0/serial/04376A6A5F5780/permission/door
     # https://www.makehaven.org/api/v0/serial/<card_uid>/permission/<badge_name>
+    if device_name == "servertest":
+        device_name = "door" #only for testing
+    
     url = "https://www.makehaven.org/api/v0/serial/"+card_uid+"/permission/"+device_name
 
     response = urllib.request.urlopen(url)
@@ -30,7 +33,7 @@ async def ask_drupal(device_name, card_uid):
     drupal_response = json.loads(data)
     # expecting: [{"permission":"Door","access":"true","uid":"2"}] #and 'uid' is the member id number
     if len(drupal_response)>=1: #returns [] from drupal if not authorized
-        member_uid = drupal_response[0]["uid"]
+        member_uid = int(drupal_response[0]["uid"])
         return member_uid
     else:
         return abort(403, "Member not Authorized for use of this device.") #forbidden HTTP message
