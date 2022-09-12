@@ -18,23 +18,10 @@ async def main():
     <p>rules: <a href="http://localhost:8081/docs">http://localhost:8081/docs</a></p>
     '''
 
-
 @app.get("/config")
 async def config():
     # check this out: https://github.com/pawansingh126/yaml_editor
     return "This will let you edit the YAML in the browser, one day"
-
-@app.get("/new/esphome")
-async def new_esphome():
-    # could be as simple as a form where you write in a name
-    # and the server handles starting a UUID(filename + hostname) and the needed YAML file
-    return "This will let you store some UUID address in the database, one day"
-
-
-@app.get("/new/membercard")
-async def new_membercard():
-    # probably need a dedicated cardreader and ?websockets to make this easy
-    return "This will assign a new card to the member, one day"
 
 
 @app.post("/authreq")
@@ -42,7 +29,6 @@ async def new_membercard():
 async def authorization_request(data: AuthReqIn):
     data = await request.json
     res = await authreq(data)
-
     try:
         if res:
             device_name = data.get("device_name").strip()
