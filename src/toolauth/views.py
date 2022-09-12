@@ -18,7 +18,7 @@ async def main():
     return '''
     <h1>toolauth</h1>
     <p>Thanks for using this new Tool Authorization system. Instructions will be here one day.</p>
-    <p>rules: <a href="http://localhost:8081/docs">http://localhost:8081/docs</a></p>
+    <p>rules: <a href="http://192.168.1.170:5000/docs">http://192.168.1.170:8081/docs</a></p>
     '''
 
 @app.post("/authreq")
