@@ -7,6 +7,13 @@ from toolauth.crud import bp
 #-------Update
 #-------Delete
 
+#---------------------- Configuration between ESPHome devices -----------------------------
+@bp.get("/config/update")
+async def update_config():
+    # check this out: https://github.com/pawansingh126/yaml_editor
+    return "This will let you edit the YAML in the browser, one day"
+
+
 #---------------------- ESPHome Things: Readers, tools, vacuums ---------------------------
 @bp.get("/esphomething/create")
 async def create_esphomething():

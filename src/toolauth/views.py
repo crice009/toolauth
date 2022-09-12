@@ -18,12 +18,6 @@ async def main():
     <p>rules: <a href="http://localhost:8081/docs">http://localhost:8081/docs</a></p>
     '''
 
-@app.get("/config")
-async def config():
-    # check this out: https://github.com/pawansingh126/yaml_editor
-    return "This will let you edit the YAML in the browser, one day"
-
-
 @app.post("/authreq")
 @validate_request(AuthReqIn)
 async def authorization_request(data: AuthReqIn):
