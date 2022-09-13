@@ -1,6 +1,6 @@
 from toolauth import app
 from toolauth.services.readtotool import reader_to_listed_tools
-from toolauth.services.authorized import authreq
+from toolauth.services.authorized import authreq, asyncio_wrapper
 from toolauth.services.esphome_api import other_picked
 from toolauth.data import *
 
@@ -44,7 +44,7 @@ async def authorization_request(data: AuthReqIn):
                 12  # uuid4().int  # would be great if a database generated these
             )
 
-            await reader_to_listed_tools(
+            startDevice = Thread(target=asyncio_wrapper, args=(
                 device_name,
                 card_uid,
                 member_name,
@@ -52,7 +52,18 @@ async def authorization_request(data: AuthReqIn):
                 reader_name,
                 reader_uid,
                 session_uid,
-            )
+            ))
+
+            startDevice.start()
+            # await reader_to_listed_tools(
+            #     device_name,
+            #     card_uid,
+            #     member_name,
+            #     member_uid,
+            #     reader_name,
+            #     reader_uid,
+            #     session_uid,
+            # )
 
             return "Hello Auth"
     except Exception as e:
