@@ -28,14 +28,10 @@ async def authorization_request(data: AuthReqIn):
             device_name = data.get("device_name").strip()
             card_uid = data.get("card_uid", "").replace("-", "").lower()
             member_name = "Homer Simpson"
-            member_uid = res  # only sends back the member uid as of now
-            # text-based name for card reader
+            member_uid = res
             reader_name = data.get("reader_name").strip()
-            # some kind of ID number for card reader
             reader_uid = data.get("reader_uid").strip()
-            session_uid = (
-                12  # uuid4().int  # would be great if a database generated these
-            )
+            session_uid = 12
 
             await reader_to_listed_tools(
                 device_name,
