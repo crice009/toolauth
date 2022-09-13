@@ -6,14 +6,10 @@ app = Quart(__name__)
 
 QuartSchema(app)
 
-from toolauth import views
-
 
 def run() -> None:
     # big flaskbacks to https://github.com/miguelgrinberg/microblog
     # tutorial: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
-    from toolauth.crud import bp as crud_bp
-
-    app.register_blueprint(crud_bp)
+    from toolauth import views
 
     app.run(host="0.0.0.0", port=8081)  # corey needs this in 8080 on WSL2
