@@ -3,16 +3,9 @@ from toolauth.services.readtotool import reader_to_listed_tools
 from toolauth.services.authorized import authreq
 from toolauth.services.esphome_api import other_picked
 from toolauth.models import AuthReqIn, SessionIn
-
-from quart import Quart, request, jsonify, abort, g
-from quart_schema import QuartSchema, validate_request, validate_response
-
-import sqlite3  # currently unused, but would like to...
-from uuid import uuid4
-from threading import Thread
+from quart import request, abort
+from quart_schema import validate_request
 import sys
-
-# ---------------------------------------------------------------------------------------------------
 
 
 @app.get("/")
