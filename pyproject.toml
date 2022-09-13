@@ -15,9 +15,9 @@ db-sqlite3 = "^0.0.1"
 PyYAML = "^6.0"
 uuid = "^1.30"
 
-
-[tool.poetry.group.dev.dependencies]
+[tool.poetry.dev-dependencies]
 pytest-asyncio = "^0.19.0"
+black = "^22.8.0"
 
 [build-system]
 requires = ["poetry-core"]
