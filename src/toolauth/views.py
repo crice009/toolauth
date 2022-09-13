@@ -2,7 +2,7 @@ from toolauth import app
 from toolauth.services.readtotool import reader_to_listed_tools
 from toolauth.services.authorized import authreq
 from toolauth.services.esphome_api import other_picked
-from toolauth.data import *
+from toolauth.models import AuthReqIn, SessionIn
 
 from quart import Quart, request, jsonify, abort, g
 from quart_schema import QuartSchema, validate_request, validate_response
