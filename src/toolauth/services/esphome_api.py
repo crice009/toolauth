@@ -4,7 +4,9 @@ import json
 import sys
 
 
-async def device_enable(device_name, card_uid, member_uid, member_name, session_uid) -> None:
+async def device_enable(
+    device_name, card_uid, member_uid, member_name, session_uid
+) -> None:
     # print("made it to device_enable()", file=sys.stdout)
     # path = os.path.dirname(os.path.realpath(__file__))
     # path = os.path.join(path, 'easierthanadb.yaml')
@@ -17,7 +19,7 @@ async def device_enable(device_name, card_uid, member_uid, member_name, session_
     #             auth_enable_key = k['auth_enable_key']
 
     api = APIClient(
-        address=device_name.strip()+".local",
+        address=device_name.strip() + ".local",
         port=6053,
         password="",
         noise_psk="7NuG+LMZHTgyWCblaZnvn03acjyDnYYJz01BScw3eHM=",
@@ -25,10 +27,14 @@ async def device_enable(device_name, card_uid, member_uid, member_name, session_
     try:
         await api.connect(login=True)
     except:
-        raise Exception("Could not connect to ESPHome device: "+device_name+" During ESPHome auth_enable Native API call.")
+        raise Exception(
+            "Could not connect to ESPHome device: "
+            + device_name
+            + " During ESPHome auth_enable Native API call."
+        )
 
     # List all entities of the device
-    entities, user_services = (await api.list_entities_services())
+    entities, user_services = await api.list_entities_services()
     # < this is brilliant, but there is also an 'other_picked' service
     services = dict((s.name, s) for s in user_services)
     service_keys = dict((s.name, s.key) for s in user_services)
@@ -54,8 +60,13 @@ async def device_enable(device_name, card_uid, member_uid, member_name, session_
             UserServiceArg(name="session_uid", type=UserServiceArgType.INT),
         ],
     )
-    data = {"member_name": member_name, "member_uid": member_uid,"card_uid": card_uid, "session_uid": session_uid}
-    
+    data = {
+        "member_name": member_name,
+        "member_uid": member_uid,
+        "card_uid": card_uid,
+        "session_uid": session_uid,
+    }
+
     try:
         await api.execute_service(service, data)
         return
@@ -69,7 +80,7 @@ async def other_picked(device_name) -> None:
     print("made it to other_picked()", file=sys.stdout)
 
     api = APIClient(
-        address=device_name.strip()+".local",
+        address=device_name.strip() + ".local",
         port=6053,
         password="",
         noise_psk="7NuG+LMZHTgyWCblaZnvn03acjyDnYYJz01BScw3eHM=",
@@ -77,10 +88,14 @@ async def other_picked(device_name) -> None:
     try:
         await api.connect(login=True)
     except:
-        raise Exception("Could not connect to ESPHome device: "+device_name+" During ESPHome other_picked Native API call.")
+        raise Exception(
+            "Could not connect to ESPHome device: "
+            + device_name
+            + " During ESPHome other_picked Native API call."
+        )
 
     # List all UserService's of the device
-    entities, user_services = (await api.list_entities_services())
+    entities, user_services = await api.list_entities_services()
     service_keys = dict((s.name, s.key) for s in user_services)
     # print("Service Keys for "+device_name+": "+json.dumps(service_keys), file=sys.stdout)
     other_picked_key = service_keys.get("other_picked", 0)
@@ -91,7 +106,7 @@ async def other_picked(device_name) -> None:
 
     try:
         await api.execute_service(service, data)
-        return #everything worked
+        return  # everything worked
     except Exception as e:
         print(e, file=sys.stderr)
         return device_name

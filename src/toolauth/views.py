@@ -14,21 +14,21 @@ import sys
 
 # ---------------------------------------------------------------------------------------------------
 
+
 @app.get("/")
 async def main():
-    return '''
+    return """
     <h1>toolauth</h1>
     <p>Thanks for using this new Tool Authorization system. Instructions will be here one day.</p>
     <p>rules: <a href="http://192.168.1.170:5000/docs">http://192.168.1.170:8081/docs</a></p>
-    '''
+    """
+
 
 @app.post("/authreq")
 @validate_request(AuthReqIn)
 async def authorization_request(data: AuthReqIn):
     data = await request.json
     res = await authreq(data)
-
-
 
     try:
         if res:
@@ -40,8 +40,9 @@ async def authorization_request(data: AuthReqIn):
             reader_name = data.get("reader_name").strip()
             # some kind of ID number for card reader
             reader_uid = data.get("reader_uid").strip()
-            session_uid = 12 #uuid4().int  # would be great if a database generated these
-
+            session_uid = (
+                12  # uuid4().int  # would be great if a database generated these
+            )
 
             await reader_to_listed_tools(
                 device_name,
@@ -50,7 +51,8 @@ async def authorization_request(data: AuthReqIn):
                 member_uid,
                 reader_name,
                 reader_uid,
-                session_uid)
+                session_uid,
+            )
 
             return "Hello Auth"
     except Exception as e:
@@ -58,14 +60,15 @@ async def authorization_request(data: AuthReqIn):
         return abort(500, e)
 
 
-@app.post("/otherpicked")               #server testing only
-async def otherpicked():                #server testing only
-    d = await request.json              #server testing only
-    device_name = d['device_name']      #server testing only
-    await other_picked(device_name)     #server testing only
-    return "other was picked"           #server testing only
+@app.post("/otherpicked")  # server testing only
+async def otherpicked():  # server testing only
+    d = await request.json  # server testing only
+    device_name = d["device_name"]  # server testing only
+    await other_picked(device_name)  # server testing only
+    return "other was picked"  # server testing only
 
-#needs much more definition for the long-term loggging
+
+# needs much more definition for the long-term loggging
 @app.post("/session")
 @validate_request(SessionIn)
 async def session_handler(data: SessionIn):

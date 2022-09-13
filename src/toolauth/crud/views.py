@@ -1,11 +1,11 @@
 from quart import render_template
 from toolauth.crud import bp
 
-#CRUD operations:
-#-------Create
-#-------Read
-#-------Update
-#-------Delete
+# CRUD operations:
+# -------Create
+# -------Read
+# -------Update
+# -------Delete
 
 # #---------------------- Configuration between ESPHome devices -----------------------------
 # @bp.get("/config/update")
