@@ -1,7 +1,13 @@
 from toolauth.services.esphome_api import device_enable
 from quart import abort
+import asyncio
 import yaml
 import os
+
+# threading wrapper
+def threaded_tool(device_name, card_uid, member_name, member_uid, reader_name, reader_uid, session_uid):
+    asyncio.run(reader_to_listed_tools(device_name, card_uid, member_name, member_uid, reader_name, reader_uid, session_uid))
+
 
 # could reduce the number of inputs to just reader_uid & session_uid, if the yaml or database are working
 async def reader_to_listed_tools(

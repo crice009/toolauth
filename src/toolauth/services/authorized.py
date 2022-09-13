@@ -1,10 +1,7 @@
 from quart import abort
 import urllib.request, json
-import asyncio
 import os
 
-def asyncio_wrapper( data):
-    asyncio.run(authreq(data))
 
 async def authreq(data):
     # device_name="str", #text-based name for tool intended to use
