@@ -9,6 +9,7 @@ from quart_schema import QuartSchema, validate_request, validate_response
 
 import sqlite3  # currently unused, but would like to...
 from uuid import uuid4
+from threading import Thread
 import sys
 
 # ---------------------------------------------------------------------------------------------------
@@ -26,6 +27,9 @@ async def main():
 async def authorization_request(data: AuthReqIn):
     data = await request.json
     res = await authreq(data)
+
+
+
     try:
         if res:
             device_name = data.get("device_name").strip()
@@ -37,6 +41,7 @@ async def authorization_request(data: AuthReqIn):
             # some kind of ID number for card reader
             reader_uid = data.get("reader_uid").strip()
             session_uid = 12 #uuid4().int  # would be great if a database generated these
+
 
             await reader_to_listed_tools(
                 device_name,

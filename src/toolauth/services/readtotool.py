@@ -26,4 +26,4 @@ async def reader_to_listed_tools(device_name, card_uid, member_name, member_uid,
         if resp: err_catch.append(resp)
     
     if len(err_catch)>=1: 
-        raise Exception("Could not connect to ESPHome device: "+err_catch[0]+" and possibly more. Check network and config files.")
+        raise Exception("Could not connect to ESPHome device(s): ".join(err_catch)+". Check network and config files.")
