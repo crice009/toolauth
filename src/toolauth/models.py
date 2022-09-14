@@ -41,6 +41,14 @@ class SessionInit:
 
 
 @dataclass
+class AuthEnableServicePayload:
+    member_name: str
+    member_uid: int
+    card_uid: str
+    session_uid: int
+
+
+@dataclass
 class SessionIn:
     """
     Sent by ESP32 to begin or end a session on tool/device.
