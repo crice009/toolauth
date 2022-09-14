@@ -52,8 +52,11 @@ async def otherpicked():
     return "other was picked"
 
 
-# needs much more definition for the long-term loggging
 @app.post("/session")
 @validate_request(SessionIn)
 async def session_handler(data: SessionIn):
-    return "Hello Session"
+    """
+    Needs much more definition to be useful for long-term logging.
+    """
+    print(data)
+    pass
