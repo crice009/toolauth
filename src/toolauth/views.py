@@ -23,19 +23,21 @@ async def main():
 async def authorization_request(data: AuthReqIn):
     res = await authreq(data)
 
-    try:
-        if res:
-            await reader_to_listed_tools(
-                device_name=data.device_name.strip(),
-                card_uid=data.card_uid.replace("-", "").lower(),
-                member_name="Homer Simpson",
-                member_uid=res,
-                reader_name=data.reader_name.strip(),
-                reader_uid=data.reader_uid.strip(),
-                session_uid=12,
-            )
+    if not res:
+        return
 
-            return "Hello Auth"
+    try:
+        await reader_to_listed_tools(
+            device_name=data.device_name.strip(),
+            card_uid=data.card_uid.replace("-", "").lower(),
+            member_name="Homer Simpson",
+            member_uid=res,
+            reader_name=data.reader_name.strip(),
+            reader_uid=data.reader_uid.strip(),
+            session_uid=12,
+        )
+
+        return "Hello Auth"
     except Exception as e:
         print(e, file=sys.stderr)
         return abort(500, e)
