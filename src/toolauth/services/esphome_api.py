@@ -52,7 +52,7 @@ async def device_enable(
         return device_name
 
 
-async def other_picked(device_name) -> None:
+async def other_picked(device_name: str) -> str | None:
     print("made it to other_picked()", file=sys.stdout)
 
     api = APIClient(
@@ -70,20 +70,13 @@ async def other_picked(device_name) -> None:
             + " During ESPHome other_picked Native API call."
         )
 
-    # List all UserService's of the device
-    entities, user_services = await api.list_entities_services()
+    _, user_services = await api.list_entities_services()
     service_keys = dict((s.name, s.key) for s in user_services)
-    # print("Service Keys for "+device_name+": "+json.dumps(service_keys), file=sys.stdout)
     other_picked_key = service_keys.get("other_picked", 0)
-
-    # define the service to be contacted
     service = UserService(name="other_picked", key=other_picked_key, args=[])
-    data = {}
 
     try:
-        await api.execute_service(service, data)
-        return  # everything worked
+        await api.execute_service(service, {})
     except Exception as e:
         print(e, file=sys.stderr)
         return device_name
-    # -------------------------------------------------------------------------------------------
