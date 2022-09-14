@@ -2,12 +2,23 @@ from dataclasses import dataclass
 
 
 @dataclass
-class AuthReqIn:  # ------ESP32 sends these right after a card read
-    device_name: str  # text-based name for tool intended to use
-    device_uid: str  # some kind of ID number for tool intended
-    reader_name: str  # text-based name for card reader
-    reader_uid: str  # some kind of ID number for card reader
-    card_uid: str  # the card_uid of member asking for permission
+class AuthReqIn:
+    """
+    Request payload sent by ESP32 after a card read.
+
+    Attributes:
+        device_name: text-based name for tool intended to use
+        device_uid: some kind of ID number for tool intended
+        reader_name: text-based name for card reader
+        reader_uid: some kind of ID number for card reader
+        card_uid: the card_uid of member asking for permission
+    """
+
+    device_name: str
+    device_uid: str
+    reader_name: str
+    reader_uid: str
+    card_uid: str
 
 
 @dataclass

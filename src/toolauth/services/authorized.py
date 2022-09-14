@@ -1,23 +1,16 @@
 from quart import abort
+from toolauth.models import AuthReqIn
 import urllib.request, json
-import os
 
 
-async def authreq(data):
-    # device_name="str", #text-based name for tool intended to use
-    # device_uid="str",  #some kind of ID number for tool intended
-    # reader_name="str", #text-based name for card reader
-    # reader_uid="str",  #some kind of ID number for card reader
-    # card_uid="str",    #the card_uid of member asking for permission
+async def authreq(data: AuthReqIn):
+    """Initial handler used to handle a card read sent by the ESP32."""
+    permission_details = await ask_drupal(
+        device_name=data.device_name.strip(),
+        card_uid=data.card_uid.replace("-", "").lower(),
+    )
 
-    device_name = data.get("device_name").strip()
-    card_uid = data.get("card_uid", "").replace("-", "").lower()
-
-    response = await ask_drupal(device_name, card_uid)
-    if response:
-        return response
-    else:
-        return False
+    return permission_details or False
 
 
 async def ask_drupal(device_name, card_uid):
