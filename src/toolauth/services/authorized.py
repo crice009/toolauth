@@ -1,6 +1,9 @@
+import json
+import urllib.request
+
 from quart import abort
+
 from toolauth.models import AuthReqIn
-import urllib.request, json
 
 
 async def authreq(data: AuthReqIn):

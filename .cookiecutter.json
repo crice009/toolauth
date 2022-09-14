@@ -1,0 +1,14 @@
+{
+  "_output_dir": "/home/vincenzo/workspace/asdf",
+  "_template": "gh:cjolowicz/cookiecutter-hypermodern-python",
+  "author": "Corey Rice",
+  "copyright_year": "2022",
+  "development_status": "Development Status :: 1 - Planning",
+  "email": "crice009@gmail.com",
+  "friendly_name": "Toolauth",
+  "github_user": "crice009",
+  "license": "MIT",
+  "package_name": "toolauth",
+  "project_name": "toolauth",
+  "version": "0.0.0"
+}

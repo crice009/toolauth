@@ -1,7 +1,11 @@
-from aioesphomeapi.client import APIClient
-from aioesphomeapi.model import UserService, UserServiceArg, UserServiceArgType
 import sys
 from dataclasses import asdict
+
+from aioesphomeapi.client import APIClient
+from aioesphomeapi.model import UserService
+from aioesphomeapi.model import UserServiceArg
+from aioesphomeapi.model import UserServiceArgType
+
 from toolauth.models import AuthEnableServicePayload
 
 
@@ -25,7 +29,7 @@ async def device_enable(
         )
 
     _, user_services = await api.list_entities_services()
-    service_keys = dict((s.name, s.key) for s in user_services)
+    service_keys = {s.name: s.key for s in user_services}
     auth_enable_key = service_keys.get("auth_enable", 0)
 
     service = UserService(
@@ -71,7 +75,7 @@ async def other_picked(device_name: str) -> str | None:
         )
 
     _, user_services = await api.list_entities_services()
-    service_keys = dict((s.name, s.key) for s in user_services)
+    service_keys = {s.name: s.key for s in user_services}
     other_picked_key = service_keys.get("other_picked", 0)
     service = UserService(name="other_picked", key=other_picked_key, args=[])
 

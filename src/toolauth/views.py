@@ -1,12 +1,16 @@
+import sys
+from typing import Dict
+
+from quart import abort
+from quart import request
+from quart_schema import validate_request
+
 from toolauth import app
-from toolauth.services.readtotool import reader_to_listed_tools
+from toolauth.models import AuthReqIn
+from toolauth.models import SessionIn
 from toolauth.services.authorized import authreq
 from toolauth.services.esphome_api import other_picked
-from toolauth.models import AuthReqIn, SessionIn
-from quart import request, abort
-from quart_schema import validate_request
-from typing import Dict
-import sys
+from toolauth.services.readtotool import reader_to_listed_tools
 
 
 @app.get("/")

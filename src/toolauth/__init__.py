@@ -1,6 +1,11 @@
-from quart import Quart, g
-from quart_schema import QuartSchema
+# src/toolauth/__init__.py
+"""Toolauth."""
 import sqlite3  # currently unused, but would like to...
+
+from quart import Quart
+from quart import g
+from quart_schema import QuartSchema
+
 
 app = Quart(__name__)
 

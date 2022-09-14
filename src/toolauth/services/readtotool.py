@@ -1,6 +1,8 @@
-from toolauth.services.esphome_api import device_enable
-import yaml
 import os
+
+import yaml
+
+from toolauth.services.esphome_api import device_enable
 
 
 async def reader_to_listed_tools(
@@ -13,7 +15,7 @@ async def reader_to_listed_tools(
     path = os.path.dirname(os.path.realpath(__file__))
     path = os.path.join(path, "config/readertodevice.yaml")
 
-    with open(path, "r") as file:
+    with open(path) as file:
         pairings = yaml.safe_load(file)
         devices = [n["devices"] for n in pairings if n["reader"]["name"] == reader_name]
 

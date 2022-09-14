@@ -19,13 +19,13 @@
       id: 67895 #probably the MAC address
     - name: "bandsaw"
       id: 18902 #probably the MAC address
-      
+
 - reader:
     name: "door"
     id: "0CB815B98E3C" #probably the MAC address
   devices:
     #list all connected devices here, even if it is 1:1
-    - name: "door" 
+    - name: "door"
       id: "0CB815B98E3C" #probably the MAC address
 
 - reader:
@@ -33,5 +33,5 @@
     id: "0CB815B98E3C" #probably the MAC address
   devices:
     #list all connected devices here, even if it is 1:1
-    - name: "servertest" 
+    - name: "servertest"
       id: "0CB815B98E3C" #probably the MAC address
