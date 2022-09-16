@@ -88,7 +88,7 @@ async def other_picked(device_name) -> None:
     try:
         await api.connect(login=True)
     except:
-        raise Exception(
+        raise Exception( # message back to server
             "Could not connect to ESPHome device: "
             + device_name
             + " During ESPHome other_picked Native API call."
@@ -109,5 +109,42 @@ async def other_picked(device_name) -> None:
         return  # everything worked
     except Exception as e:
         print(e, file=sys.stderr)
-        return device_name
+        return
     # -------------------------------------------------------------------------------------------
+#tool_com_error
+
+async def tool_com_error(reader_name, device_name) -> None:
+    print("made it to other_picked()", file=sys.stdout)
+
+    api = APIClient(
+        address=reader_name.strip() + ".local",
+        port=6053,
+        password="",
+        noise_psk="7NuG+LMZHTgyWCblaZnvn03acjyDnYYJz01BScw3eHM=",
+    )
+    try:
+        await api.connect(login=True)
+    except:
+        raise Exception( # message back to server
+            "Could not connect to ESPHome device: "
+            + reader_name
+            + " During ESPHome tool_com_error Native API call, while trying to report error reaching the device:"
+            + device_name
+        )
+
+    # List all UserService's of the device
+    entities, user_services = await api.list_entities_services()
+    service_keys = dict((s.name, s.key) for s in user_services)
+    # print("Service Keys for "+device_name+": "+json.dumps(service_keys), file=sys.stdout)
+    tool_com_key = service_keys.get("tool_com_error", 0)
+
+    # define the service to be contacted
+    service = UserService(name="tool_com_error", key=tool_com_key, args=[])
+    data = {}
+
+    try:
+        await api.execute_service(service, data)
+        return  # everything worked
+    except Exception as e:
+        print(e, file=sys.stderr)
+        return 
