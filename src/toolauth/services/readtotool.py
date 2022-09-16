@@ -1,13 +1,9 @@
-from toolauth.services.esphome_api import device_enable
-from quart import abort
-import asyncio
-import yaml
-import os
+from toolauth.services.esphome_api import device_enable, tool_com_error
+import asyncio, yaml, sys, os
 
 # threading wrapper
 def threaded_tool(device_name, card_uid, member_name, member_uid, reader_name, reader_uid, session_uid):
     asyncio.run(reader_to_listed_tools(device_name, card_uid, member_name, member_uid, reader_name, reader_uid, session_uid))
-
 
 # could reduce the number of inputs to just reader_uid & session_uid, if the yaml or database are working
 async def reader_to_listed_tools(
@@ -30,19 +26,23 @@ async def reader_to_listed_tools(
                 + " | Device: "
                 + device_name
             )
+    try:
+        err_catch = []
+        for d in devices:
+            device_name = d["name"]
+            device_uid = d["id"]
+            resp = await device_enable(
+                device_name, card_uid, member_uid, member_name, session_uid
+            )
+            if resp:
+                err_catch.append(resp)
 
-    err_catch = []
-    for d in devices:
-        device_name = d["name"]
-        device_uid = d["id"]
-        resp = await device_enable(
-            device_name, card_uid, member_uid, member_name, session_uid
-        )
-        if resp:
-            err_catch.append(resp)
-
-    if len(err_catch) >= 1:
-        raise Exception(
-            "Could not connect to ESPHome device(s): ".join(err_catch)
-            + ". Check network and config files."
-        )
+        if len(err_catch) >= 1:
+            raise Exception(
+                "Could not connect to ESPHome device(s): ".join(err_catch)
+                + ". Check network and config files."
+            )
+    except Exception as e:
+        print(e, file=sys.stderr)
+        asyncio.run(tool_com_error(reader_name, device_name))
+    
