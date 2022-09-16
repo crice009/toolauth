@@ -71,16 +71,11 @@ async def authorization_request(data: AuthReqIn):
         return abort(500, e)
 
 
-@app.post("/otherpicked")  # server testing only
-async def otherpicked():  # server testing only
-    d = await request.json  # server testing only
-    device_name = d["device_name"]  # server testing only
-    await other_picked(device_name)  # server testing only
-    return "other was picked"  # server testing only
-
-
 # needs much more definition for the long-term loggging
 @app.post("/session")
 @validate_request(SessionIn)
 async def session_handler(data: SessionIn):
+    # should add logic here to check if we need to run 'other_picked'
+    # that would involve reading the YAML file that pairs readers with devices, 
+    # to see if any need shut-off with other_picked - then sending those messages.
     return "Hello Session"
