@@ -1,12 +1,11 @@
 import json
 import urllib.request
-
 from quart import abort
+from typing import Literal
+from toolauth.api.auth.models import AuthReqIn
 
-from toolauth.models import AuthReqIn
 
-
-async def authreq(data: AuthReqIn):
+async def authreq(data: AuthReqIn) -> int | Literal[False]:
     """Initial handler used to handle a card read sent by the ESP32."""
     permission_details = await ask_drupal(
         device_name=data.device_name.strip(),
@@ -16,7 +15,7 @@ async def authreq(data: AuthReqIn):
     return permission_details or False
 
 
-async def ask_drupal(device_name, card_uid):
+async def ask_drupal(device_name: str, card_uid: str) -> int:
     # drupal6 is the current card system, so work with that
     # https://www.makehaven.org/api/v0/serial/04376A6A5F5780/permission/door
     # https://www.makehaven.org/api/v0/serial/<card_uid>/permission/<badge_name>

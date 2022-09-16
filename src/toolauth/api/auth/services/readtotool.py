@@ -1,7 +1,7 @@
 import asyncio
 import yaml
 import os
-from toolauth.services.esphome_api import device_enable
+from toolauth.api.auth.services.esphome_api import device_enable
 
 
 async def reader_to_listed_tools(

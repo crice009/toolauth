@@ -1,12 +1,10 @@
 import sys
 from dataclasses import asdict
-
 from aioesphomeapi.client import APIClient
 from aioesphomeapi.model import UserService
 from aioesphomeapi.model import UserServiceArg
 from aioesphomeapi.model import UserServiceArgType
-
-from toolauth.models import AuthEnableServicePayload
+from toolauth.api.auth.models import AuthEnableServicePayload
 
 
 async def device_enable(
@@ -50,7 +48,7 @@ async def device_enable(
     )
 
     try:
-        await api.execute_service(service, asdict(args))
+        return await api.execute_service(service, asdict(args))
     except Exception as e:
         print(e, file=sys.stderr)
         return device_name
@@ -80,7 +78,7 @@ async def other_picked(device_name: str) -> str | None:
     service = UserService(name="other_picked", key=other_picked_key, args=[])
 
     try:
-        await api.execute_service(service, {})
+        return await api.execute_service(service, {})
     except Exception as e:
         print(e, file=sys.stderr)
         return device_name

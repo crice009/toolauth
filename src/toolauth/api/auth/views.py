@@ -3,14 +3,14 @@ from typing import Dict
 from quart import abort, request
 from quart_schema import validate_request
 from threading import Thread
-from toolauth import app
-from toolauth.models import AuthReqIn, SessionIn
-from toolauth.services.authorized import authreq
-from toolauth.services.esphome_api import other_picked
-from toolauth.services.readtotool import threaded_tool
+from . import auth_blueprint
+from toolauth.api.auth.models import AuthReqIn, SessionIn
+from toolauth.api.auth.services.authorized import authreq
+from toolauth.api.auth.services.esphome_api import other_picked
+from toolauth.api.auth.services.readtotool import threaded_tool
 
 
-@app.get("/")
+@auth_blueprint.get("/")
 async def main() -> str:
     return """
     <h1>toolauth</h1>
@@ -19,7 +19,7 @@ async def main() -> str:
     """
 
 
-@app.post("/authreq")
+@auth_blueprint.post("/authreq")
 @validate_request(AuthReqIn)
 async def authorization_request(data: AuthReqIn) -> str:
     res = await authreq(data)
@@ -49,7 +49,7 @@ async def authorization_request(data: AuthReqIn) -> str:
     abort(403)
 
 
-@app.post("/otherpicked")
+@auth_blueprint.post("/otherpicked")
 async def otherpicked() -> str:
     """For server testing only"""
     d: Dict[str, str] = await request.json
@@ -58,7 +58,7 @@ async def otherpicked() -> str:
     return "other was picked"
 
 
-@app.post("/session")
+@auth_blueprint.post("/session")
 @validate_request(SessionIn)
 async def session_handler(data: SessionIn) -> None:
     """
