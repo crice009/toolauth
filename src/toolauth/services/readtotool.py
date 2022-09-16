@@ -1,13 +1,17 @@
-import os
-
+import asyncio
 import yaml
-
+import os
 from toolauth.services.esphome_api import device_enable
 
 
 async def reader_to_listed_tools(
-    device_name, card_uid, member_name, member_uid, reader_name, reader_uid, session_uid
-):
+    device_name: str,
+    card_uid: str,
+    member_name: str,
+    member_uid: int,
+    reader_name: str,
+    session_uid: int,
+) -> None:
     """
     Could reduce the number of inputs to just reader_uid & session_uid, if the yaml
     or database are working.
@@ -36,3 +40,19 @@ async def reader_to_listed_tools(
         raise Exception(
             f"{'Could not connect to ESPHome device(s): '.join(err_catch)}. Check network and config files."
         )
+
+
+def threaded_tool(
+    device_name: str,
+    card_uid: str,
+    member_name: str,
+    member_uid: int,
+    reader_name: str,
+    session_uid: int,
+) -> None:
+    """Threading wrapper"""
+    asyncio.run(
+        reader_to_listed_tools(
+            device_name, card_uid, member_name, member_uid, reader_name, session_uid
+        )
+    )

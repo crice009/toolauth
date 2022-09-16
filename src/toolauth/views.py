@@ -1,20 +1,17 @@
 import sys
 from typing import Dict
-
-from quart import abort
-from quart import request
+from quart import abort, request
 from quart_schema import validate_request
-
+from threading import Thread
 from toolauth import app
-from toolauth.models import AuthReqIn
-from toolauth.models import SessionIn
+from toolauth.models import AuthReqIn, SessionIn
 from toolauth.services.authorized import authreq
 from toolauth.services.esphome_api import other_picked
-from toolauth.services.readtotool import reader_to_listed_tools
+from toolauth.services.readtotool import threaded_tool
 
 
 @app.get("/")
-async def main():
+async def main() -> str:
     return """
     <h1>toolauth</h1>
     <p>Thanks for using this new Tool Authorization system. Instructions will be here one day.</p>
@@ -24,31 +21,36 @@ async def main():
 
 @app.post("/authreq")
 @validate_request(AuthReqIn)
-async def authorization_request(data: AuthReqIn):
+async def authorization_request(data: AuthReqIn) -> str:
     res = await authreq(data)
 
-    if not res:
-        return
+    if res:
+        try:
+            startDevice = Thread(
+                target=threaded_tool,
+                args=(
+                    data.device_name,
+                    data.card_uid,
+                    "Homer Simpson",
+                    res,
+                    data.reader_name,
+                    data.reader_uid,
+                    12,
+                ),
+            )
 
-    try:
-        await reader_to_listed_tools(
-            device_name=data.device_name.strip(),
-            card_uid=data.card_uid.replace("-", "").lower(),
-            member_name="Homer Simpson",
-            member_uid=res,
-            reader_name=data.reader_name.strip(),
-            reader_uid=data.reader_uid.strip(),
-            session_uid=12,
-        )
+            startDevice.start()
 
-        return "Hello Auth"
-    except Exception as e:
-        print(e, file=sys.stderr)
-        return abort(500, e)
+            return "Hello Auth"
+        except Exception as e:
+            print(e, file=sys.stderr)
+            return abort(500, e)
+
+    abort(403)
 
 
 @app.post("/otherpicked")
-async def otherpicked():
+async def otherpicked() -> str:
     """For server testing only"""
     d: Dict[str, str] = await request.json
     device_name = d["device_name"]
@@ -58,7 +60,7 @@ async def otherpicked():
 
 @app.post("/session")
 @validate_request(SessionIn)
-async def session_handler(data: SessionIn):
+async def session_handler(data: SessionIn) -> None:
     """
     Needs much more definition to be useful for long-term logging.
     """

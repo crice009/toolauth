@@ -51,6 +51,7 @@ typeguard = ">=2.13.3"
 xdoctest = {extras = ["colors"], version = ">=0.15.10"}
 myst-parser = {version = ">=0.16.1"}
 pytest-asyncio = "^0.19.0"
+types-PyYAML = "^6.0.11"
 
 [tool.poetry.scripts]
 toolauth = "toolauth.__main__:main"
