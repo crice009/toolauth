@@ -29,6 +29,14 @@
       id: "0CB815B98E3C" #probably the MAC address
 
 - reader:
+    name: "metal_bridgeport"
+    id: "5667" #probably the MAC address
+  devices:
+    #list all connected devices here, even if it is 1:1
+    - name: "metal_bridgeport" 
+      id: "5667" #probably the MAC address
+
+- reader:
     name: "servertest"
     id: "0CB815B98E3C" #probably the MAC address
   devices:

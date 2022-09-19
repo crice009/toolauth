@@ -22,7 +22,7 @@ async def device_enable(
         address=device_name.strip() + ".local",
         port=6053,
         password="",
-        noise_psk="7NuG+LMZHTgyWCblaZnvn03acjyDnYYJz01BScw3eHM=",
+        noise_psk="4Ojj7zcIkpUmq3fqUNtOh+GEMeb6ctWnhzH09Bu1h8c=",
     )
     try:
         await api.connect(login=True)
@@ -83,7 +83,7 @@ async def other_picked(device_name) -> None:
         address=device_name.strip() + ".local",
         port=6053,
         password="",
-        noise_psk="7NuG+LMZHTgyWCblaZnvn03acjyDnYYJz01BScw3eHM=",
+        noise_psk="4Ojj7zcIkpUmq3fqUNtOh+GEMeb6ctWnhzH09Bu1h8c=",
     )
     try:
         await api.connect(login=True)
