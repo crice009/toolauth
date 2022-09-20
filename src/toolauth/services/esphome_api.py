@@ -4,9 +4,7 @@ import json
 import sys
 
 
-async def device_enable(
-    device_name, card_uid, member_uid, member_name, session_uid
-) -> None:
+async def device_enable(session) -> None:
     # print("made it to device_enable()", file=sys.stdout)
     # path = os.path.dirname(os.path.realpath(__file__))
     # path = os.path.join(path, 'easierthanadb.yaml')
@@ -19,7 +17,7 @@ async def device_enable(
     #             auth_enable_key = k['auth_enable_key']
 
     api = APIClient(
-        address=device_name.strip() + ".local",
+        address=session.device_name.strip() + ".local",
         port=6053,
         password="",
         noise_psk="4Ojj7zcIkpUmq3fqUNtOh+GEMeb6ctWnhzH09Bu1h8c=",
@@ -29,7 +27,7 @@ async def device_enable(
     except:
         raise Exception(
             "Could not connect to ESPHome device: "
-            + device_name
+            + session.device_name
             + " During ESPHome auth_enable Native API call."
         )
 
@@ -61,10 +59,10 @@ async def device_enable(
         ],
     )
     data = {
-        "member_name": member_name,
-        "member_uid": member_uid,
-        "card_uid": card_uid,
-        "session_uid": session_uid,
+        "member_name": session.member_name,
+        "member_uid": session.member_uid,
+        "card_uid": session.card_uid,
+        "session_uid": session.session_uid,
     }
 
     try:
@@ -72,7 +70,7 @@ async def device_enable(
         return
     except Exception as e:
         print(e, file=sys.stderr)
-        return device_name
+        return session
     # -------------------------------------------------------------------------------------------
 
 
@@ -88,7 +86,7 @@ async def other_picked(device_name) -> None:
     try:
         await api.connect(login=True)
     except:
-        raise Exception( # message back to server
+        raise Exception(  # message back to server
             "Could not connect to ESPHome device: "
             + device_name
             + " During ESPHome other_picked Native API call."
@@ -111,13 +109,16 @@ async def other_picked(device_name) -> None:
         print(e, file=sys.stderr)
         return
     # -------------------------------------------------------------------------------------------
-#tool_com_error
 
-async def tool_com_error(reader_name, device_name) -> None:
+
+# tool_com_error
+
+
+async def tool_com_error(reader, devices) -> None:
     print("made it to other_picked()", file=sys.stdout)
 
     api = APIClient(
-        address=reader_name.strip() + ".local",
+        address=reader.strip() + ".local",
         port=6053,
         password="",
         noise_psk="7NuG+LMZHTgyWCblaZnvn03acjyDnYYJz01BScw3eHM=",
@@ -125,11 +126,12 @@ async def tool_com_error(reader_name, device_name) -> None:
     try:
         await api.connect(login=True)
     except:
-        raise Exception( # message back to server
+        raise Exception(  # message back to server
             "Could not connect to ESPHome device: "
-            + reader_name
-            + " During ESPHome tool_com_error Native API call, while trying to report error reaching the device:"
-            + device_name
+            + reader
+            + " During ESPHome tool_com_error Native API call, while trying to report error reaching the device(s):".join(
+                devices
+            )
         )
 
     # List all UserService's of the device
@@ -147,4 +149,4 @@ async def tool_com_error(reader_name, device_name) -> None:
         return  # everything worked
     except Exception as e:
         print(e, file=sys.stderr)
-        return 
+        return

@@ -1,9 +1,9 @@
 from quart import abort
 import urllib.request, json
-import os
+import sys, os
 
 
-async def authreq(data):
+async def is_member_authorized(data):
     # device_name="str", #text-based name for tool intended to use
     # device_uid="str",  #some kind of ID number for tool intended
     # reader_name="str", #text-based name for card reader

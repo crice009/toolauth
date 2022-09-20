@@ -1,6 +1,6 @@
 from toolauth import app
-from toolauth.services.readtotool import reader_to_listed_tools, threaded_tool
-from toolauth.services.authorized import authreq
+from toolauth.services.readtotool import reader_to_listed_tools, trigger_device_after_response
+from toolauth.services.authorized import is_member_authorized
 from toolauth.services.esphome_api import other_picked
 from toolauth.data import *
 
@@ -28,7 +28,11 @@ async def main():
 @validate_request(AuthReqIn)
 async def authorization_request(data: AuthReqIn):
     data = await request.json
-    res = await authreq(data)
+    # log card-read in database: reader, possible tools, time, |member
+
+    # reader &make session_uid > list_of_devices > *device > *authorized > *aioesphome_api &send Session
+
+    # res = await is_member_authorized(data)
 
     try:
         if res:
@@ -44,15 +48,18 @@ async def authorization_request(data: AuthReqIn):
                 12  # uuid4().int  # would be great if a database generated these
             )
 
-            startDevice = Thread(target=threaded_tool, args=(
-                device_name,
-                card_uid,
-                member_name,
-                member_uid,
-                reader_name,
-                reader_uid,
-                session_uid,
-            ))
+            startDevice = Thread(
+                target=trigger_device_after_response,
+                args=(
+                    device_name,
+                    card_uid,
+                    member_name,
+                    member_uid,
+                    reader_name,
+                    reader_uid,
+                    session_uid,
+                ),
+            )
 
             startDevice.start()
             # await reader_to_listed_tools(
@@ -75,7 +82,10 @@ async def authorization_request(data: AuthReqIn):
 @app.post("/session")
 @validate_request(SessionIn)
 async def session_handler(data: SessionIn):
+    data = await request.json
+    if data.action == "session start":
+        # 
     # should add logic here to check if we need to run 'other_picked'
-    # that would involve reading the YAML file that pairs readers with devices, 
+    # that would involve reading the YAML file that pairs readers with devices,
     # to see if any need shut-off with other_picked - then sending those messages.
     return "Hello Session"

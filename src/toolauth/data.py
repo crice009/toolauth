@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from uuid import uuid1
 
 
 @dataclass
@@ -28,3 +29,29 @@ class SessionIn:  # ------ESP32 sends these to begin or end a session on tool/de
     action: str  # the reason this message is being sent (could be coded to int)
     device_uid: str  # a number to keep track of the devices || easier data search
     device_name: str  # the name of the tool || easier data search
+
+
+# -------------------------------------------------------------------------------------------------------------
+class Session:
+    def __init__(self):
+        self.id = uuid1()
+        self.member_name = "homer simpson"  # their name for possible display on screens, stickers, etc. || easier data search
+        self.member_uid = 0  # a number to keep track of members || easier data search
+        self.card_uid = ""  # the actual number straight from their card, possibly without "-" || easier data search
+        self.session_uid = ""  # a number to keep track of individual card/tool use sessions || easier data search
+        self.active_session = (
+            False  # the state of the tool session ~ might change this to 'session'
+        )
+        self.action = (
+            ""  # the reason this message is being sent (could be coded to int)
+        )
+        self.reader_name = ""  # text-based name for card reader
+        self.reader_uid = 0  # some kind of ID number for card reader
+        self.potential_devices = []  # track all the devices it could have been
+        self.device_name = ""  # the name of the tool || easier data search
+        self.device_uid = (
+            0  # a number to keep track of the devices || easier data search
+        )
+
+    def __iter__(self):
+        return self
