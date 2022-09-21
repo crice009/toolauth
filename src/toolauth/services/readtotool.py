@@ -1,9 +1,22 @@
-from toolauth.services.esphome_api import device_enable, tool_com_error
+from toolauth.services.esphome_api import device_enable, tool_com_error, other_picked
 import asyncio, yaml, sys, os
 
 # threading wrapper
-def threaded_tool(device_name, card_uid, member_name, member_uid, reader_name, reader_uid, session_uid):
-    asyncio.run(reader_to_listed_tools(device_name, card_uid, member_name, member_uid, reader_name, reader_uid, session_uid))
+def threaded_tool(
+    device_name, card_uid, member_name, member_uid, reader_name, reader_uid, session_uid
+):
+    asyncio.run(
+        reader_to_listed_tools(
+            device_name,
+            card_uid,
+            member_name,
+            member_uid,
+            reader_name,
+            reader_uid,
+            session_uid,
+        )
+    )
+
 
 # could reduce the number of inputs to just reader_uid & session_uid, if the yaml or database are working
 async def reader_to_listed_tools(
@@ -45,4 +58,26 @@ async def reader_to_listed_tools(
     except Exception as e:
         print(e, file=sys.stderr)
         asyncio.run(tool_com_error(reader_name, device_name))
-    
+
+
+# threading wrapper
+def threaded_other_tool(device_name):
+    asyncio.run(other_tool_picked(device_name))
+
+
+async def other_tool_picked(device_name):
+    # this is why we can only have one reader per device...
+    path = os.path.dirname(os.path.realpath(__file__))
+    path = os.path.join(path, "config/readertodevice.yaml")
+
+    with open(path, "r") as file:
+        pairings = yaml.safe_load(file)
+        reader_set = []
+        for n in pairings:
+            for d in n["devices"]:
+                if d["name"] == device_name:
+                    reader_set = n["devices"]
+
+        for d in reader_set:
+            if d["name"] != device_name:
+                await other_picked(d)
