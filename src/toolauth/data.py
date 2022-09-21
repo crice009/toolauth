@@ -28,3 +28,6 @@ class SessionIn:  # ------ESP32 sends these to begin or end a session on tool/de
     action: str  # the reason this message is being sent (could be coded to int)
     device_uid: str  # a number to keep track of the devices || easier data search
     device_name: str  # the name of the tool || easier data search
+
+    def get(self, key):
+        return self.get(key)
