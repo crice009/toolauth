@@ -1,16 +1,22 @@
 from toolauth import app
-from toolauth.services.readtotool import reader_to_listed_tools, threaded_tool
+from toolauth.services.readtotool import threaded_tool, threaded_other_tool
 from toolauth.services.authorized import authreq
-from toolauth.services.esphome_api import other_picked
-from toolauth.data import *
+from toolauth.data import AuthReqIn, SessionIn, _connect_db
 
 from quart import Quart, request, jsonify, abort, g
 from quart_schema import QuartSchema, validate_request, validate_response
 
-import sqlite3  # currently unused, but would like to...
 from uuid import uuid4
 from threading import Thread
+from datetime import datetime
 import sys
+
+
+def _get_db():
+    if not hasattr(g, "sqlite_db"):
+        g.sqlite_db = _connect_db()
+    return g.sqlite_db
+
 
 # ---------------------------------------------------------------------------------------------------
 
@@ -40,19 +46,20 @@ async def authorization_request(data: AuthReqIn):
             reader_name = data.get("reader_name").strip()
             # some kind of ID number for card reader
             reader_uid = data.get("reader_uid").strip()
-            session_uid = (
-                12  # uuid4().int  # would be great if a database generated these
-            )
+            session_uid = uuid4().int
 
-            startDevice = Thread(target=threaded_tool, args=(
-                device_name,
-                card_uid,
-                member_name,
-                member_uid,
-                reader_name,
-                reader_uid,
-                session_uid,
-            ))
+            startDevice = Thread(
+                target=threaded_tool,
+                args=(
+                    device_name,
+                    card_uid,
+                    member_name,
+                    member_uid,
+                    reader_name,
+                    reader_uid,
+                    session_uid,
+                ),
+            )
 
             startDevice.start()
             # await reader_to_listed_tools(
@@ -75,7 +82,41 @@ async def authorization_request(data: AuthReqIn):
 @app.post("/session")
 @validate_request(SessionIn)
 async def session_handler(data: SessionIn):
-    # should add logic here to check if we need to run 'other_picked'
-    # that would involve reading the YAML file that pairs readers with devices, 
-    # to see if any need shut-off with other_picked - then sending those messages.
-    return "Hello Session"
+    data = await request.json
+    db = _get_db()
+    db.execute(  # always save the session data
+        """ INSERT INTO session_entry (
+            session_uid,
+            entry_time,
+            member_uid,
+            member_name,
+            card_uid,
+            active_session,
+            action_description,
+            device_uid,
+            device_name
+            ) VALUES (?, ?)
+        """,
+        [
+            data.get("session_uid"),
+            datetime.utcnow(),
+            data.get("member_uid"),
+            data.get("member_name"),
+            data.get("card_uid"),
+            data.get("active_session"),
+            data.get("action"),
+            0,  # device_uid stand-in value...
+            data.get("device_name"),
+        ],
+    )
+    db.commit()
+
+    if data.get("action") == "session start":
+
+        other_picked = Thread(
+            target=threaded_other_tool, args=(data.get("device_name"))
+        )
+        other_picked.start()
+        return "other_picked was activated"
+    else:
+        return "Hello Session"
