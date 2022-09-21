@@ -24,4 +24,5 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
+init_db = "toolauth:init_db"
 start = "toolauth:run"
