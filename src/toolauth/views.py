@@ -1,7 +1,7 @@
-from toolauth import app
+from toolauth import app, _connect_db
 from toolauth.services.readtotool import threaded_tool, threaded_other_tool
 from toolauth.services.authorized import authreq
-from toolauth.data import AuthReqIn, SessionIn, _connect_db
+from toolauth.data import AuthReqIn, SessionIn
 
 from quart import Quart, request, jsonify, abort, g
 from quart_schema import QuartSchema, validate_request, validate_response
