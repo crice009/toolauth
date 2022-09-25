@@ -1,0 +1,50 @@
+### Module positions - created on Wed Jul 27 12:56:02 2022 ###
+### Printed by Pcbnew version (6.0.5)
+## Unit = mm, Angle = deg.
+## Side : top
+# Ref            Val                   Package                                                           PosX       PosY       Rot  Side
+5vRelay1-1       SANYOU_SRD_Form_C     Relay_SPDT_SANYOU_SRD_Series_Form_C                           139.0087   -91.4860    0.0000  top
+5vRelay1-2       SANYOU_SRD_Form_C     Relay_SPDT_SANYOU_SRD_Series_Form_C                           139.0087  -108.8997    0.0000  top
+BZ1              Buzzer                Buzzer_15x7.5RM7.6                                            107.1327  -138.3533    0.0000  top
+Boot-1           Conn_01x02_Female     PinSocket_1x02_P2.54mm_Vertical                                91.1407  -142.9533   90.0000  top
+Bypass-1         Conn_01x02_Female     PinSocket_1x02_P2.54mm_Vertical                                91.1407  -128.1683   90.0000  top
+C1               0.1uF                 C_1206_3216Metric_Pad1.33x1.80mm_HandSolder                   114.9967   -89.8393  180.0000  top
+C2               0.1uF                 C_1206_3216Metric_Pad1.33x1.80mm_HandSolder                    98.2327   -59.3593    0.0000  top
+D1               B160-E3               D_SMA                                                         131.3797   -86.3529  -90.0000  top
+D2               B160-E3               D_SMA                                                         130.9987  -100.2533  -90.0000  top
+E-Stop-1         Conn_01x03_Female     PinSocket_1x03_P2.54mm_Vertical                                91.1357  -107.8483   90.0000  top
+E-Stp1           NMOSFETSOT23          SOT-23                                                        100.2647  -108.3813  180.0000  top
+EN-1             Conn_01x02_Female     PinSocket_1x02_P2.54mm_Vertical                                91.1407  -138.3533   90.0000  top
+F1               Fuse                  Fuseholder_Littelfuse_100_series_5x20mm                       143.9897   -57.2003    0.0000  top
+F2               Fuse                  Fuseholder_Littelfuse_100_series_5x20mm                       164.1087  -144.9573  180.0000  top
+F3               Fuse                  Fuseholder_Littelfuse_100_series_5x20mm                       162.2407  -104.9153   90.0000  top
+J1               Conn_01x19_Female     PinSocket_1x19_P2.54mm_Vertical                                90.8667   -56.6403    0.0000  top
+J2               Conn_01x19_Female     PinSocket_1x19_P2.54mm_Vertical                               122.8199   -56.6403    0.0000  top
+J10              Screw_Terminal_01x04  TerminalBlock_Altech_AK300-4_P5.00mm                          173.0611   -78.1937   90.0000  top
+J11              Screw_Terminal_01x04  TerminalBlock_Altech_AK300-4_P5.00mm                          173.0611   -98.1937   90.0000  top
+J12              Screw_Terminal_01x04  TerminalBlock_Altech_AK300-4_P5.00mm                          173.0611  -118.1937   90.0000  top
+J13              Screw_Terminal_01x04  TerminalBlock_Altech_AK300-4_P5.00mm                          173.0611  -138.1937   90.0000  top
+LCD-16x2-I2C-1   Conn_01x04_Female     PinSocket_1x04_P2.54mm_Vertical                               123.3887  -118.0083   90.0000  top
+NeoPixel-1       NeoPixel_THT          PinSocket_1x03_P2.54mm_Vertical                                91.1207  -117.7793   90.0000  top
+PS1              CFM06S050             CFM06S050                                                     162.1137   -78.9173  180.0000  top
+R1               1kOhm                 R_1206_3216Metric_Pad1.30x1.75mm_HandSolder                    98.2327   -81.9653    0.0000  top
+R2               1kOhm                 R_1206_3216Metric_Pad1.30x1.75mm_HandSolder                   127.0871   -83.9907    0.0000  top
+R3               10kOhm                R_1206_3216Metric_Pad1.30x1.75mm_HandSolder                   106.1067   -84.7593   90.0000  top
+R4               10kOhm                R_1206_3216Metric_Pad1.30x1.75mm_HandSolder                    98.2327   -61.8993  180.0000  top
+R5               10kOhm                R_1206_3216Metric_Pad1.30x1.75mm_HandSolder                    98.2327   -64.1853  180.0000  top
+R6               10kOhm                R_1206_3216Metric_Pad1.30x1.75mm_HandSolder                    98.2327   -71.8053  180.0000  top
+R7               10kOhm                R_1206_3216Metric_Pad1.30x1.75mm_HandSolder                    98.2327   -84.5053    0.0000  top
+R8               10kOhm                R_1206_3216Metric_Pad1.30x1.75mm_HandSolder                    98.2327   -74.3453  180.0000  top
+R11              Relay_Omron_MY2-02    relay-Omron-MY2-02                                            151.3187  -130.0983  -90.0000  top
+R12              10kOhm                R_1206_3216Metric_Pad1.30x1.75mm_HandSolder                   117.0178   -68.1990   90.0000  top
+R13              10kOhm                R_1206_3216Metric_Pad1.30x1.75mm_HandSolder                   116.9924   -62.9672  -90.0000  top
+RFID-card-I2C-1  Conn_01x04_Female     PinSocket_1x04_P2.54mm_Vertical                               123.3887  -128.1683   90.0000  top
+RFID-card-SPI-1  Conn_01x06_Female     PinSocket_1x06_P2.54mm_Vertical                               118.3241  -108.4829   90.0000  top
+SW2              SW_DIP_x04            SW_DIP_SPSTx04_Slide_6.7x11.72mm_W7.62mm_P2.54mm_LowProfile   110.6687   -71.2873  180.0000  top
+U1               ESP32-DEVKITC-32D     MODULE_ESP32-DEVKITC-32D                                      106.8179   -76.4015    0.0000  top
+U2               TXS0102DCT            SSOP-8_2.95x2.8mm_P0.65mm                                     106.1067   -89.5853  180.0000  top
+buzz1            NMOSFETSOT23          SOT-23                                                        116.2667  -128.1933   90.0000  top
+current-sense-1  Conn_01x04_Female     PinSocket_1x04_P2.54mm_Vertical                               123.3887  -138.3283   90.0000  top
+r1-1             NMOSFETSOT23          SOT-23                                                        127.3919   -87.5213  180.0000  top
+r1-2             NMOSFETSOT23          SOT-23                                                        127.1125  -100.8375  180.0000  top
+## End
