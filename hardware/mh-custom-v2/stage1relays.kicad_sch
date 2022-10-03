@@ -826,6 +826,7 @@
     )
   )
 
+
   (junction (at 127 97.79) (diameter 0) (color 0 0 0 0)
     (uuid 18fde166-dfcc-46f6-bdb0-dc3a8e5050ca)
   )
@@ -1284,6 +1285,9 @@
     (property "Datasheet" "~" (id 3) (at 54.61 86.36 0)
       (effects (font (size 1.27 1.27)) hide)
     )
+    (property "JLCPCB Part #" "C2286" (id 4) (at 54.61 86.36 90)
+      (effects (font (size 1.27 1.27)) hide)
+    )
     (pin "1" (uuid 3b393950-b2ca-4e44-a84e-0599589e076b))
     (pin "2" (uuid e782951d-8cb5-4204-8822-04131b6181e6))
   )
@@ -1362,6 +1366,9 @@
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 152.4 101.6 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "JLCPCB Part #" "C131337" (id 4) (at 152.4 101.6 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid 73790483-b7a7-4a2f-9e79-d8751935ee8d))

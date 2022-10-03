@@ -996,6 +996,7 @@
     )
   )
 
+
   (junction (at 68.58 134.62) (diameter 0) (color 0 0 0 0)
     (uuid 0e0bfbdf-db93-42c0-9561-b80f2b8ed020)
   )
@@ -1952,6 +1953,9 @@
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 120.65 160.02 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "JLCPCB Part #" "C131339" (id 4) (at 120.65 160.02 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid e92df665-8044-4ccb-ab3e-fea9148e0e41))
