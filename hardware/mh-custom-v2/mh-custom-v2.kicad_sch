@@ -373,13 +373,13 @@
       (reference "I2C-3") (unit 1) (value "Conn_01x04_Female") (footprint "Connector_JST:JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/03adfa84-7245-4a0a-b28d-db7d09a8f743/c4f1c49d-efc9-4560-b08b-36e29c9d1e1e"
-      (reference "IN-1") (unit 1) (value "H/L1") (footprint "Connector_Audio:Jack_3.5mm_CUI_SJ-3523-SMT_Horizontal")
+      (reference "IN-1") (unit 1) (value "H/L1") (footprint "Connector_Audio:Jack_3.5mm_CUI_SJ1-3525N_Horizontal")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/03adfa84-7245-4a0a-b28d-db7d09a8f743/2ea2091a-6b2e-4f0c-ab97-1294015cfd5a"
-      (reference "IN-2") (unit 1) (value "N/L2") (footprint "Connector_Audio:Jack_3.5mm_CUI_SJ-3523-SMT_Horizontal")
+      (reference "IN-2") (unit 1) (value "N/L2") (footprint "Connector_Audio:Jack_3.5mm_CUI_SJ1-3525N_Horizontal")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/03adfa84-7245-4a0a-b28d-db7d09a8f743/81cc8c9a-043a-4e80-9c99-ecf17c2e58cb"
-      (reference "IN-3") (unit 1) (value "VOLTS") (footprint "Connector_Audio:Jack_3.5mm_CUI_SJ-3523-SMT_Horizontal")
+      (reference "IN-3") (unit 1) (value "VOLTS") (footprint "Connector_Audio:Jack_3.5mm_CUI_SJ1-3525N_Horizontal")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/03adfa84-7245-4a0a-b28d-db7d09a8f743/5f410b4c-62b8-404e-aac5-cb3dbc7baed4"
       (reference "IN-AUX-1") (unit 1) (value "H/L1") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
@@ -547,7 +547,7 @@
       (reference "R30") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/fd75559e-77bb-4f15-bd9f-e39243a04df3/0b8f9ac1-299f-4907-bd99-0b6b98fabf1b"
-      (reference "R31") (unit 1) (value "Relay_Omron_MY2-02") (footprint "relay_Omron-MY2-02:relay-Omron-MY2-02")
+      (reference "R31") (unit 1) (value "Relay_Omron_MY2-02") (footprint "MY2-02 AC110 Omron:relay-Omron-MY2-02")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/0a288765-75cb-469e-9f99-8c2767579aab"
       (reference "R32") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0603_1608Metric")

@@ -45,7 +45,7 @@
         "silk_text_upright": false,
         "zones": {
           "45_degree_only": false,
-          "min_clearance": 0.508
+          "min_clearance": 0.0
         }
       },
       "diff_pair_dimensions": [
@@ -55,7 +55,11 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        "courtyards_overlap|124644999|49875001|592d8c69-1988-4eab-952e-749405c7b95a|5c3bcee7-a674-413d-9f4b-a9718958b8a7",
+        "courtyards_overlap|124644999|69875001|5c3bcee7-a674-413d-9f4b-a9718958b8a7|6446935b-0a31-4a7e-9a74-7f16f704bcd4",
+        "courtyards_overlap|124644999|89875001|30d932ab-a94d-4f24-a01c-44bb8c55de5a|6446935b-0a31-4a7e-9a74-7f16f704bcd4"
+      ],
       "meta": {
         "version": 2
       },
@@ -120,7 +124,8 @@
       },
       "track_widths": [
         0.0,
-        0.25
+        0.25,
+        0.35
       ],
       "via_dimensions": [
         {
@@ -384,6 +389,7 @@
           "Green-Indicator-light-2",
           "H{slash}L1",
           "Member-E-Stop-aux-1",
+          "Member-E-Stop-aux-2",
           "Member-E-Stop-sw1-1",
           "Member-E-Stop-sw2-1",
           "Member-E-Stop-sw2-2",
@@ -416,6 +422,7 @@
         "nets": [
           "+3V3",
           "+5V",
+          "/mainslevelcontrol/stage1relays/dcp2",
           "3vRead-Bypass",
           "GND",
           "read-bypass"
