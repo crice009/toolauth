@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>C:\Users\Corey\Desktop\toolauth\hardware\mh-custom-v2\mh-custom-v2.kicad_sch</source>
-    <date>10/2/2022 9:51:27 PM</date>
+    <date>10/4/2022 9:31:05 PM</date>
     <tool>Eeschema (6.0.7)</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -197,7 +197,7 @@
     </comp>
     <comp ref="BZ1">
       <value>Buzzer</value>
-      <footprint>Buzzer_Beeper:Buzzer_15x7.5RM7.6</footprint>
+      <footprint>Buzzer_Beeper:Buzzer_12x9.5RM7.6</footprint>
       <fields>
         <field name="JLCPCB Part #">C96095</field>
       </fields>
@@ -378,10 +378,10 @@
       <footprint>Button_Switch_SMD:SW_DIP_SPSTx04_Slide_Omron_A6H-4101_W6.15mm_P1.27mm</footprint>
       <datasheet>https://datasheet.lcsc.com/lcsc/1912111437_Omron-Electronics-A6H-4101_C397291.pdf</datasheet>
       <fields>
-        <field name="JLCPCB Part #">C397291</field>
+        <field name="JLCPCB Part #">C224996</field>
       </fields>
       <libsource lib="Switch" part="SW_DIP_x04" description="4x DIP Switch, Single Pole Single Throw (SPST) switch, small symbol"/>
-      <property name="JLCPCB Part #" value="C397291"/>
+      <property name="JLCPCB Part #" value="C224996"/>
       <property name="Sheetname" value="lightsounds"/>
       <property name="Sheetfile" value="lightsounds.kicad_sch"/>
       <sheetpath names="/microcontroller/lightsounds/" tstamps="/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/"/>
@@ -1233,10 +1233,10 @@
       <footprint>Relay_THT:Relay_SPDT_SANYOU_SRD_Series_Form_C</footprint>
       <datasheet>http://www.sanyourelay.ca/public/products/pdf/SRD.pdf</datasheet>
       <fields>
-        <field name="JLCPCB Part #">C35449</field>
+        <field name="JLCPCB Part #">C9221</field>
       </fields>
       <libsource lib="Relay" part="SANYOU_SRD_Form_C" description="Sanyo SRD relay, Single Pole Miniature Power Relay,"/>
-      <property name="JLCPCB Part #" value="C35449"/>
+      <property name="JLCPCB Part #" value="C9221"/>
       <property name="Sheetname" value="stage1relays"/>
       <property name="Sheetfile" value="stage1relays.kicad_sch"/>
       <sheetpath names="/mainslevelcontrol/stage1relays/" tstamps="/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/"/>
@@ -1247,10 +1247,10 @@
       <footprint>Relay_THT:Relay_SPDT_SANYOU_SRD_Series_Form_C</footprint>
       <datasheet>http://www.sanyourelay.ca/public/products/pdf/SRD.pdf</datasheet>
       <fields>
-        <field name="JLCPCB Part #">C35449</field>
+        <field name="JLCPCB Part #">C9221</field>
       </fields>
       <libsource lib="Relay" part="SANYOU_SRD_Form_C" description="Sanyo SRD relay, Single Pole Miniature Power Relay,"/>
-      <property name="JLCPCB Part #" value="C35449"/>
+      <property name="JLCPCB Part #" value="C9221"/>
       <property name="Sheetname" value="stage1relays"/>
       <property name="Sheetfile" value="stage1relays.kicad_sch"/>
       <sheetpath names="/mainslevelcontrol/stage1relays/" tstamps="/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/"/>
@@ -1433,12 +1433,12 @@
     </comp>
     <comp ref="F1">
       <value>Fuse</value>
-      <footprint>Fuse:Fuseholder_Littelfuse_100_series_5x20mm</footprint>
+      <footprint>Fuse:Fuseholder_Cylinder-5x20mm_Stelvio-Kontek_PTF78_Horizontal_Open</footprint>
       <fields>
-        <field name="JLCPCB Part #">C206977</field>
+        <field name="JLCPCB Part #">C717030</field>
       </fields>
       <libsource lib="Device" part="Fuse" description="Fuse"/>
-      <property name="JLCPCB Part #" value="C206977"/>
+      <property name="JLCPCB Part #" value="C717030"/>
       <property name="Sheetname" value="stage2relay"/>
       <property name="Sheetfile" value="stage2relay.kicad_sch"/>
       <sheetpath names="/mainslevelcontrol/stage2relay/" tstamps="/6f44f9bb-3a88-498d-9739-be3794f35f17/fd75559e-77bb-4f15-bd9f-e39243a04df3/"/>
@@ -1446,12 +1446,12 @@
     </comp>
     <comp ref="F2">
       <value>Fuse</value>
-      <footprint>Fuse:Fuseholder_Littelfuse_100_series_5x20mm</footprint>
+      <footprint>Fuse:Fuseholder_Cylinder-5x20mm_Stelvio-Kontek_PTF78_Horizontal_Open</footprint>
       <fields>
-        <field name="JLBPCB Part #">C206977</field>
+        <field name="JLBPCB Part #">C717030</field>
       </fields>
       <libsource lib="Device" part="Fuse" description="Fuse"/>
-      <property name="JLBPCB Part #" value="C206977"/>
+      <property name="JLBPCB Part #" value="C717030"/>
       <property name="Sheetname" value="stage2relay"/>
       <property name="Sheetfile" value="stage2relay.kicad_sch"/>
       <sheetpath names="/mainslevelcontrol/stage2relay/" tstamps="/6f44f9bb-3a88-498d-9739-be3794f35f17/fd75559e-77bb-4f15-bd9f-e39243a04df3/"/>
@@ -1468,12 +1468,12 @@
     </comp>
     <comp ref="F3">
       <value>Fuse</value>
-      <footprint>Fuse:Fuseholder_Littelfuse_100_series_5x20mm</footprint>
+      <footprint>Fuse:Fuseholder_Cylinder-5x20mm_Stelvio-Kontek_PTF78_Horizontal_Open</footprint>
       <fields>
-        <field name="JLCPCB Part #">C206977</field>
+        <field name="JLCPCB Part #">C717030</field>
       </fields>
       <libsource lib="Device" part="Fuse" description="Fuse"/>
-      <property name="JLCPCB Part #" value="C206977"/>
+      <property name="JLCPCB Part #" value="C717030"/>
       <property name="Sheetname" value="stage3contactor"/>
       <property name="Sheetfile" value="stage3contactor.kicad_sch"/>
       <sheetpath names="/mainslevelcontrol/stage3contactor/" tstamps="/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/"/>

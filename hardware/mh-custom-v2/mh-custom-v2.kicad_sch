@@ -253,13 +253,13 @@
       (reference "#PWR0164") (unit 1) (value "+5V") (footprint "")
     )
     (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/2d7ed0ff-e95e-431c-8bcd-e29e253f78bf"
-      (reference "5vRelay1-1") (unit 1) (value "SANYOU_SRD_Form_C") (footprint "Relay_THT:Relay_SPDT_SANYOU_SRD_Series_Form_C")
+      (reference "5vRelay-1") (unit 1) (value "JQC-3FF/005-1ZS(551)") (footprint "Relay_THT:Relay_SPDT_Omron-G5LE-1")
     )
     (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/c8590882-a987-4635-a4c1-6203bce43405"
-      (reference "5vRelay1-2") (unit 1) (value "SANYOU_SRD_Form_C") (footprint "Relay_THT:Relay_SPDT_SANYOU_SRD_Series_Form_C")
+      (reference "5vRelay-2") (unit 1) (value "JQC-3FF/005-1ZS(551)") (footprint "Relay_THT:Relay_SPDT_SANYOU_SRD_Series_Form_C")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/34d7447d-980a-4ae3-bf91-7044f1ac98d3"
-      (reference "BZ1") (unit 1) (value "Buzzer") (footprint "Buzzer_Beeper:Buzzer_15x7.5RM7.6")
+      (reference "BZ1") (unit 1) (value "Buzzer") (footprint "Buzzer_Beeper:Buzzer_12x9.5RM7.6")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/7f00934a-6c71-487b-af9d-b4a2acfe06e3"
       (reference "Boot-1") (unit 1) (value "Conn_01x02_Female") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x02_P2.54mm_Vertical")
@@ -355,13 +355,13 @@
       (reference "EN-1") (unit 1) (value "Conn_01x02_Female") (footprint "Connector_PinSocket_2.54mm:PinSocket_1x02_P2.54mm_Vertical")
     )
     (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/fd75559e-77bb-4f15-bd9f-e39243a04df3/847c94dd-b84d-4235-be43-419c321ccb0f"
-      (reference "F1") (unit 1) (value "Fuse") (footprint "Fuse:Fuseholder_Littelfuse_100_series_5x20mm")
+      (reference "F1") (unit 1) (value "Fuse") (footprint "Fuse:Fuseholder_Cylinder-5x20mm_Stelvio-Kontek_PTF78_Horizontal_Open")
     )
     (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/fd75559e-77bb-4f15-bd9f-e39243a04df3/2ff34f33-dcf3-466d-b1b2-ed620cbbe491"
-      (reference "F2") (unit 1) (value "Fuse") (footprint "Fuse:Fuseholder_Littelfuse_100_series_5x20mm")
+      (reference "F2") (unit 1) (value "Fuse") (footprint "Fuse:Fuseholder_Cylinder-5x20mm_Stelvio-Kontek_PTF78_Horizontal_Open")
     )
     (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/569c6d5c-bc4d-4068-bb36-3999e0b8d38e"
-      (reference "F3") (unit 1) (value "Fuse") (footprint "Fuse:Fuseholder_Littelfuse_100_series_5x20mm")
+      (reference "F3") (unit 1) (value "Fuse") (footprint "Fuse:Fuseholder_Cylinder-5x20mm_Stelvio-Kontek_PTF78_Horizontal_Open")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/f1692095-c1e5-4034-80d1-0e42aa65f6c0"
       (reference "I2C-1") (unit 1) (value "Conn_01x04_Female") (footprint "Connector_JST:JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical")
