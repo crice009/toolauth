@@ -442,9 +442,7 @@
           "Member-Red-Reset-Button-2",
           "N{slash}L2",
           "S3-Contactor-Control",
-          "mains-fused-N{slash}L2",
-          "unconnected-(5vRelay1-1-Pad4)",
-          "unconnected-(5vRelay1-2-Pad3)"
+          "mains-fused-N{slash}L2"
         ],
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",

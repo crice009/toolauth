@@ -132,12 +132,6 @@
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/e66f252e-9160-4109-9bae-b0041183a1bc"
       (reference "#PWR0124") (unit 1) (value "GND") (footprint "")
     )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/64800c9a-c09f-4977-9940-c61031968cf9"
-      (reference "#PWR0125") (unit 1) (value "+3.3V") (footprint "")
-    )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/926986ee-ae63-41fb-ab77-2d3352949ce2"
-      (reference "#PWR0126") (unit 1) (value "GND") (footprint "")
-    )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/c3b9822a-9146-4801-9c96-2bca961529af"
       (reference "#PWR0127") (unit 1) (value "GND") (footprint "")
     )
@@ -252,12 +246,6 @@
     (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/fd75559e-77bb-4f15-bd9f-e39243a04df3/8f0bfec3-b758-44c6-a0f9-1f90cac4bfe1"
       (reference "#PWR0164") (unit 1) (value "+5V") (footprint "")
     )
-    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/2d7ed0ff-e95e-431c-8bcd-e29e253f78bf"
-      (reference "5vRelay-1") (unit 1) (value "JQC-3FF/005-1ZS(551)") (footprint "Relay_THT:Relay_SPDT_Omron-G5LE-1")
-    )
-    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/c8590882-a987-4635-a4c1-6203bce43405"
-      (reference "5vRelay-2") (unit 1) (value "JQC-3FF/005-1ZS(551)") (footprint "Relay_THT:Relay_SPDT_SANYOU_SRD_Series_Form_C")
-    )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/34d7447d-980a-4ae3-bf91-7044f1ac98d3"
       (reference "BZ1") (unit 1) (value "Buzzer") (footprint "Buzzer_Beeper:Buzzer_12x9.5RM7.6")
     )
@@ -363,9 +351,6 @@
     (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/569c6d5c-bc4d-4068-bb36-3999e0b8d38e"
       (reference "F3") (unit 1) (value "Fuse") (footprint "Fuse:Fuseholder_Cylinder-5x20mm_Stelvio-Kontek_PTF78_Horizontal_Open")
     )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/f1692095-c1e5-4034-80d1-0e42aa65f6c0"
-      (reference "I2C-1") (unit 1) (value "Conn_01x04_Female") (footprint "Connector_JST:JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical")
-    )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/999db090-0c21-48ed-a874-d1c0d96c97c3"
       (reference "I2C-2") (unit 1) (value "Conn_01x04_Female") (footprint "Connector_JST:JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical")
     )
@@ -402,17 +387,29 @@
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/74ee4f12-1e45-4f81-bb6e-285704e00ecf"
       (reference "J4") (unit 1) (value "Conn_02x19_Top_Bottom") (footprint "Connector_PinSocket_2.54mm:PinSocket_2x19_P2.54mm_Vertical")
     )
-    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/87ebdf97-d8e0-4c06-80af-35dcc4f02a15"
-      (reference "J5") (unit 1) (value "Screw_Terminal_01x04") (footprint "TerminalBlock:TerminalBlock_Altech_AK300-4_P5.00mm")
+    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/02f04e79-ec13-446b-9e64-e63387fde823"
+      (reference "J5") (unit 1) (value "Screw_Terminal_01x02") (footprint "TerminalBlock:TerminalBlock_Altech_AK300-2_P5.00mm")
     )
-    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/3e417b32-4947-4114-b26d-04b943c0a7bb"
-      (reference "J6") (unit 1) (value "Screw_Terminal_01x04") (footprint "TerminalBlock:TerminalBlock_Altech_AK300-4_P5.00mm")
+    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/952adfeb-4cfd-4a4d-9ce1-fb6d521fb670"
+      (reference "J6") (unit 1) (value "Screw_Terminal_01x02") (footprint "TerminalBlock:TerminalBlock_Altech_AK300-2_P5.00mm")
     )
-    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/edce23b8-fa96-4b1b-9bb6-660b2a9cc32f"
-      (reference "J7") (unit 1) (value "Screw_Terminal_01x04") (footprint "TerminalBlock:TerminalBlock_Altech_AK300-4_P5.00mm")
+    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/6e875ce5-3533-4a7d-9205-ccfd75825caa"
+      (reference "J7") (unit 1) (value "Screw_Terminal_01x02") (footprint "TerminalBlock:TerminalBlock_Altech_AK300-2_P5.00mm")
     )
-    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/5cf6275d-b691-4de7-a27b-64d190db3df0"
-      (reference "J8") (unit 1) (value "Screw_Terminal_01x04") (footprint "TerminalBlock:TerminalBlock_Altech_AK300-4_P5.00mm")
+    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/a125bb4b-fb97-49bb-ab46-444f0c9a766d"
+      (reference "J8") (unit 1) (value "Screw_Terminal_01x02") (footprint "TerminalBlock:TerminalBlock_Altech_AK300-2_P5.00mm")
+    )
+    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/1bdcafcb-de7e-45ce-b3b7-1e723ef60258"
+      (reference "J9") (unit 1) (value "Screw_Terminal_01x02") (footprint "TerminalBlock:TerminalBlock_Altech_AK300-2_P5.00mm")
+    )
+    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/f13d6df0-a7db-4505-83f0-0629f73502f4"
+      (reference "J10") (unit 1) (value "Screw_Terminal_01x02") (footprint "TerminalBlock:TerminalBlock_Altech_AK300-2_P5.00mm")
+    )
+    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/0a57c439-0512-45d4-bd7d-371e1c7f6464"
+      (reference "J11") (unit 1) (value "Screw_Terminal_01x02") (footprint "TerminalBlock:TerminalBlock_Altech_AK300-2_P5.00mm")
+    )
+    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/7e35b9a1-6df7-4aff-8cae-346c220af792/1025be90-f22a-454b-a7bf-ffa4eee205d1"
+      (reference "J12") (unit 1) (value "Screw_Terminal_01x02") (footprint "TerminalBlock:TerminalBlock_Altech_AK300-2_P5.00mm")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/03adfa84-7245-4a0a-b28d-db7d09a8f743/f17ba0ab-5d23-4dea-8bb9-114f82643c2e"
       (reference "JP1") (unit 1) (value "VP-GND") (footprint "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm")
@@ -587,6 +584,12 @@
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/03adfa84-7245-4a0a-b28d-db7d09a8f743/563e02d6-59fb-4414-8723-c9fd436a118e"
       (reference "Y1") (unit 1) (value "3.58MHz") (footprint "Crystal:Crystal_HC49-4H_Vertical")
+    )
+    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/2d7ed0ff-e95e-431c-8bcd-e29e253f78bf"
+      (reference "relay1") (unit 1) (value "JQC-3FF/005-1ZS(551)") (footprint "Relay_THT:Relay_SPDT_SANYOU_SRD_Series_Form_C")
+    )
+    (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/c8590882-a987-4635-a4c1-6203bce43405"
+      (reference "relay2") (unit 1) (value "JQC-3FF/005-1ZS(551)") (footprint "Relay_THT:Relay_SPDT_SANYOU_SRD_Series_Form_C")
     )
   )
 )

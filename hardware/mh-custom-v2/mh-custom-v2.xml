@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>C:\Users\Corey\Desktop\toolauth\hardware\mh-custom-v2\mh-custom-v2.kicad_sch</source>
-    <date>10/4/2022 9:31:05 PM</date>
+    <date>10/5/2022 12:09:57 PM</date>
     <tool>Eeschema (6.0.7)</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -428,19 +428,6 @@
       <property name="Sheetfile" value="lightsounds.kicad_sch"/>
       <sheetpath names="/microcontroller/lightsounds/" tstamps="/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/"/>
       <tstamps>3aa64055-329e-40e9-88b9-f6b4e07fd4c1</tstamps>
-    </comp>
-    <comp ref="I2C-1">
-      <value>Conn_01x04_Female</value>
-      <footprint>Connector_JST:JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical</footprint>
-      <fields>
-        <field name="JLCPCB Part #">C131334</field>
-      </fields>
-      <libsource lib="Connector" part="Conn_01x04_Female" description="Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <property name="JLCPCB Part #" value="C131334"/>
-      <property name="Sheetname" value="breakoutboards"/>
-      <property name="Sheetfile" value="breakoutbaords.kicad_sch"/>
-      <sheetpath names="/microcontroller/breakoutboards/" tstamps="/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/"/>
-      <tstamps>f1692095-c1e5-4034-80d1-0e42aa65f6c0</tstamps>
     </comp>
     <comp ref="I2C-2">
       <value>Conn_01x04_Female</value>
@@ -1228,34 +1215,6 @@
       <sheetpath names="/microcontroller/ade7953/" tstamps="/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/03adfa84-7245-4a0a-b28d-db7d09a8f743/"/>
       <tstamps>563e02d6-59fb-4414-8723-c9fd436a118e</tstamps>
     </comp>
-    <comp ref="5vRelay1-1">
-      <value>SANYOU_SRD_Form_C</value>
-      <footprint>Relay_THT:Relay_SPDT_SANYOU_SRD_Series_Form_C</footprint>
-      <datasheet>http://www.sanyourelay.ca/public/products/pdf/SRD.pdf</datasheet>
-      <fields>
-        <field name="JLCPCB Part #">C9221</field>
-      </fields>
-      <libsource lib="Relay" part="SANYOU_SRD_Form_C" description="Sanyo SRD relay, Single Pole Miniature Power Relay,"/>
-      <property name="JLCPCB Part #" value="C9221"/>
-      <property name="Sheetname" value="stage1relays"/>
-      <property name="Sheetfile" value="stage1relays.kicad_sch"/>
-      <sheetpath names="/mainslevelcontrol/stage1relays/" tstamps="/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/"/>
-      <tstamps>2d7ed0ff-e95e-431c-8bcd-e29e253f78bf</tstamps>
-    </comp>
-    <comp ref="5vRelay1-2">
-      <value>SANYOU_SRD_Form_C</value>
-      <footprint>Relay_THT:Relay_SPDT_SANYOU_SRD_Series_Form_C</footprint>
-      <datasheet>http://www.sanyourelay.ca/public/products/pdf/SRD.pdf</datasheet>
-      <fields>
-        <field name="JLCPCB Part #">C9221</field>
-      </fields>
-      <libsource lib="Relay" part="SANYOU_SRD_Form_C" description="Sanyo SRD relay, Single Pole Miniature Power Relay,"/>
-      <property name="JLCPCB Part #" value="C9221"/>
-      <property name="Sheetname" value="stage1relays"/>
-      <property name="Sheetfile" value="stage1relays.kicad_sch"/>
-      <sheetpath names="/mainslevelcontrol/stage1relays/" tstamps="/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/"/>
-      <tstamps>c8590882-a987-4635-a4c1-6203bce43405</tstamps>
-    </comp>
     <comp ref="Bypass-1">
       <value>Conn_01x02_Female</value>
       <footprint>Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical</footprint>
@@ -1402,6 +1361,34 @@
       <property name="Sheetfile" value="stage1relays.kicad_sch"/>
       <sheetpath names="/mainslevelcontrol/stage1relays/" tstamps="/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/"/>
       <tstamps>dbcb6033-1c27-4e15-9f04-d9fb13fd36e6</tstamps>
+    </comp>
+    <comp ref="relay1">
+      <value>JQC-3FF/005-1ZS(551)</value>
+      <footprint>Relay_THT:Relay_SPDT_SANYOU_SRD_Series_Form_C</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2109061830_HF-Xiamen-Hongfa-Electroacoustic-JQC-3FF-005-1ZS-551_C9221.pdf</datasheet>
+      <fields>
+        <field name="JLCPCB Part #">C9221</field>
+      </fields>
+      <libsource lib="Relay" part="SANYOU_SRD_Form_C" description="Sanyo SRD relay, Single Pole Miniature Power Relay,"/>
+      <property name="JLCPCB Part #" value="C9221"/>
+      <property name="Sheetname" value="stage1relays"/>
+      <property name="Sheetfile" value="stage1relays.kicad_sch"/>
+      <sheetpath names="/mainslevelcontrol/stage1relays/" tstamps="/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/"/>
+      <tstamps>2d7ed0ff-e95e-431c-8bcd-e29e253f78bf</tstamps>
+    </comp>
+    <comp ref="relay2">
+      <value>JQC-3FF/005-1ZS(551)</value>
+      <footprint>Relay_THT:Relay_SPDT_SANYOU_SRD_Series_Form_C</footprint>
+      <datasheet>https://datasheet.lcsc.com/lcsc/2109061830_HF-Xiamen-Hongfa-Electroacoustic-JQC-3FF-005-1ZS-551_C9221.pdf</datasheet>
+      <fields>
+        <field name="JLCPCB Part #">C9221</field>
+      </fields>
+      <libsource lib="Relay" part="SANYOU_SRD_Form_C" description="Sanyo SRD relay, Single Pole Miniature Power Relay,"/>
+      <property name="JLCPCB Part #" value="C9221"/>
+      <property name="Sheetname" value="stage1relays"/>
+      <property name="Sheetfile" value="stage1relays.kicad_sch"/>
+      <sheetpath names="/mainslevelcontrol/stage1relays/" tstamps="/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/"/>
+      <tstamps>c8590882-a987-4635-a4c1-6203bce43405</tstamps>
     </comp>
     <comp ref="T3">
       <value>AO3400A</value>
@@ -2179,7 +2166,6 @@
       <node ref="C13" pin="1" pintype="passive"/>
       <node ref="C14" pin="1" pintype="passive"/>
       <node ref="C15" pin="1" pintype="passive"/>
-      <node ref="I2C-1" pin="3" pinfunction="Pin_3" pintype="passive"/>
       <node ref="I2C-2" pin="3" pinfunction="Pin_3" pintype="passive"/>
       <node ref="I2C-3" pin="3" pinfunction="Pin_3" pintype="passive"/>
       <node ref="J3" pin="1" pinfunction="Pin_1" pintype="passive"/>
@@ -2200,8 +2186,6 @@
       <node ref="U2" pin="8" pinfunction="PULL_HIGH" pintype="input"/>
     </net>
     <net code="2" name="+5V">
-      <node ref="5vRelay1-1" pin="5" pintype="passive"/>
-      <node ref="5vRelay1-2" pin="5" pintype="passive"/>
       <node ref="BZ1" pin="1" pinfunction="-" pintype="passive"/>
       <node ref="D3" pin="1" pinfunction="K" pintype="passive"/>
       <node ref="D4" pin="1" pinfunction="K" pintype="passive"/>
@@ -2212,11 +2196,13 @@
       <node ref="R26" pin="2" pintype="passive"/>
       <node ref="R33" pin="2" pintype="passive"/>
       <node ref="R4" pin="2" pintype="passive"/>
+      <node ref="relay1" pin="5" pintype="passive"/>
+      <node ref="relay2" pin="5" pintype="passive"/>
     </net>
     <net code="3" name="/mainslevelcontrol/stage1relays/dcp2">
-      <node ref="5vRelay1-2" pin="2" pintype="passive"/>
       <node ref="D4" pin="2" pinfunction="A" pintype="passive"/>
       <node ref="T4" pin="3" pinfunction="D" pintype="passive"/>
+      <node ref="relay2" pin="2" pintype="passive"/>
     </net>
     <net code="4" name="/microcontroller/lightsounds/dcp1">
       <node ref="BZ1" pin="2" pinfunction="+" pintype="passive"/>
@@ -2280,7 +2266,6 @@
       <node ref="D2" pin="1" pinfunction="K" pintype="passive"/>
       <node ref="E-Stop-1" pin="3" pinfunction="Pin_3" pintype="passive"/>
       <node ref="EN-1" pin="2" pinfunction="Pin_2" pintype="passive"/>
-      <node ref="I2C-1" pin="4" pinfunction="Pin_4" pintype="passive"/>
       <node ref="I2C-2" pin="4" pinfunction="Pin_4" pintype="passive"/>
       <node ref="I2C-3" pin="4" pinfunction="Pin_4" pintype="passive"/>
       <node ref="IN-1" pin="R" pintype="passive"/>
@@ -2404,8 +2389,8 @@
       <node ref="R31" pin="9" pintype="bidirectional"/>
     </net>
     <net code="31" name="Member-E-Stop-sw1-1">
-      <node ref="5vRelay1-2" pin="1" pintype="passive"/>
       <node ref="J7" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="relay2" pin="1" pintype="passive"/>
     </net>
     <net code="32" name="Member-E-Stop-sw2-1">
       <node ref="J5" pin="1" pinfunction="Pin_1" pintype="passive"/>
@@ -2417,18 +2402,18 @@
       <node ref="R31" pin="5" pintype="bidirectional"/>
     </net>
     <net code="34" name="Member-Green-Button-1">
-      <node ref="5vRelay1-1" pin="1" pintype="passive"/>
       <node ref="J5" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="relay1" pin="1" pintype="passive"/>
     </net>
     <net code="35" name="Member-Red-Reset-Button-1">
-      <node ref="5vRelay1-1" pin="3" pintype="passive"/>
       <node ref="F1" pin="2" pintype="passive"/>
       <node ref="J6" pin="4" pinfunction="Pin_4" pintype="passive"/>
       <node ref="PS1" pin="2" pinfunction="ACL" pintype="passive"/>
+      <node ref="relay1" pin="3" pintype="passive"/>
     </net>
     <net code="36" name="Member-Red-Reset-Button-2">
-      <node ref="5vRelay1-2" pin="4" pintype="passive"/>
       <node ref="J6" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="relay2" pin="4" pintype="passive"/>
     </net>
     <net code="37" name="Net-(C3-Pad1)">
       <node ref="C3" pin="1" pintype="passive"/>
@@ -2558,7 +2543,6 @@
       <node ref="SPI-1" pin="1" pinfunction="Pin_1" pintype="passive"/>
     </net>
     <net code="66" name="SCL">
-      <node ref="I2C-1" pin="1" pinfunction="Pin_1" pintype="passive"/>
       <node ref="I2C-2" pin="1" pinfunction="Pin_1" pintype="passive"/>
       <node ref="I2C-3" pin="1" pinfunction="Pin_1" pintype="passive"/>
       <node ref="J4" pin="5" pinfunction="Pin_5" pintype="passive"/>
@@ -2587,7 +2571,6 @@
       <node ref="J3" pin="34" pinfunction="Pin_34" pintype="passive"/>
     </net>
     <net code="72" name="SDA">
-      <node ref="I2C-1" pin="2" pinfunction="Pin_2" pintype="passive"/>
       <node ref="I2C-2" pin="2" pinfunction="Pin_2" pintype="passive"/>
       <node ref="I2C-3" pin="2" pinfunction="Pin_2" pintype="passive"/>
       <node ref="J4" pin="11" pinfunction="Pin_11" pintype="passive"/>
@@ -2677,12 +2660,12 @@
       <node ref="T2" pin="2" pinfunction="S" pintype="passive"/>
     </net>
     <net code="89" name="read-bypass">
-      <node ref="5vRelay1-1" pin="2" pintype="passive"/>
       <node ref="Bypass-1" pin="1" pinfunction="Pin_1" pintype="passive"/>
       <node ref="D3" pin="2" pinfunction="A" pintype="passive"/>
       <node ref="R33" pin="1" pintype="passive"/>
       <node ref="T3" pin="3" pinfunction="D" pintype="passive"/>
       <node ref="T5" pin="3" pinfunction="D" pintype="passive"/>
+      <node ref="relay1" pin="2" pintype="passive"/>
     </net>
     <net code="90" name="reset3v">
       <node ref="J4" pin="21" pinfunction="Pin_21" pintype="passive"/>
@@ -2694,17 +2677,17 @@
       <node ref="J4" pin="24" pinfunction="Pin_24" pintype="passive"/>
       <node ref="R27" pin="1" pintype="passive"/>
     </net>
-    <net code="92" name="unconnected-(5vRelay1-1-Pad4)">
-      <node ref="5vRelay1-1" pin="4" pintype="passive"/>
-    </net>
-    <net code="93" name="unconnected-(5vRelay1-2-Pad3)">
-      <node ref="5vRelay1-2" pin="3" pintype="passive"/>
-    </net>
-    <net code="94" name="unconnected-(R31-Pad1)">
+    <net code="92" name="unconnected-(R31-Pad1)">
       <node ref="R31" pin="1" pintype="bidirectional"/>
     </net>
-    <net code="95" name="unconnected-(R31-Pad4)">
+    <net code="93" name="unconnected-(R31-Pad4)">
       <node ref="R31" pin="4" pintype="bidirectional"/>
+    </net>
+    <net code="94" name="unconnected-(relay1-Pad4)">
+      <node ref="relay1" pin="4" pintype="passive"/>
+    </net>
+    <net code="95" name="unconnected-(relay2-Pad3)">
+      <node ref="relay2" pin="3" pintype="passive"/>
     </net>
     <net code="96" name="v-pin-1">
       <node ref="J3" pin="5" pinfunction="Pin_5" pintype="passive"/>
