@@ -1135,7 +1135,7 @@
     (uuid 14614df4-15b2-4d90-8ea7-269355f825d9)
     (property "Reference" "PS1" (id 0) (at 87.63 151.13 0))
     (property "Value" "CFM06S050" (id 1) (at 87.63 153.67 0))
-    (property "Footprint" "VB05-T2S05-E fromEasyEDA:VB05-T2S05-E" (id 2) (at 97.79 156.21 0)
+    (property "Footprint" "CFM06S050-E - Cincon:CFM06S050E" (id 2) (at 97.79 156.21 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
     (property "Datasheet" "https://www.cincon.com.tw/productdownload/SPEC-CFM06S-V12.pdf" (id 3) (at 97.79 158.75 0)
