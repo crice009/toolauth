@@ -60,20 +60,20 @@
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/d0ead168-68e1-44d6-acc2-e54fead118c1"
       (reference "#PWR02") (unit 1) (value "+5V") (footprint "")
     )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/72caadd5-963d-408a-b010-ddf83ca901da/9bfad63c-4cad-4e87-a517-275a835ef6d5"
+    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/72caadd5-963d-408a-b010-ddf83ca901da/8084d657-2998-4fab-870a-9b0f95f48f05"
       (reference "#PWR0101") (unit 1) (value "GND") (footprint "")
     )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/72caadd5-963d-408a-b010-ddf83ca901da/8274ee5c-9fdc-45f2-a17f-d5c5e0d2c092"
+    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/72caadd5-963d-408a-b010-ddf83ca901da/5a9894a5-5e5b-466c-91b1-e9db9fc4a024"
       (reference "#PWR0102") (unit 1) (value "GND") (footprint "")
     )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/72caadd5-963d-408a-b010-ddf83ca901da/0bc85813-e36d-4a54-82aa-12a06ec56075"
-      (reference "#PWR0103") (unit 1) (value "GND") (footprint "")
+    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/72caadd5-963d-408a-b010-ddf83ca901da/fd8899ee-ed23-4cda-9b69-9811b30bf1f9"
+      (reference "#PWR0103") (unit 1) (value "+3.3V") (footprint "")
     )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/72caadd5-963d-408a-b010-ddf83ca901da/88dc200d-e780-4872-9619-29d2df90f251"
+    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/72caadd5-963d-408a-b010-ddf83ca901da/310c3aa5-be67-4cca-8f08-d85750c2152d"
       (reference "#PWR0104") (unit 1) (value "+5V") (footprint "")
     )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/72caadd5-963d-408a-b010-ddf83ca901da/a75f3213-c563-4987-bd23-55d75ec10de8"
-      (reference "#PWR0105") (unit 1) (value "+3.3V") (footprint "")
+    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/72caadd5-963d-408a-b010-ddf83ca901da/905755d5-b78d-41f5-8fe1-518e0cf8a9d9"
+      (reference "#PWR0105") (unit 1) (value "GND") (footprint "")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/96fb7815-2784-4fa4-a802-e1626c223ceb"
       (reference "#PWR0106") (unit 1) (value "+5V") (footprint "")
@@ -451,7 +451,7 @@
       (reference "LA1") (unit 1) (value "Lamp") (footprint "")
     )
     (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/14614df4-15b2-4d90-8ea7-269355f825d9"
-      (reference "PS1") (unit 1) (value "CFM06S050") (footprint "CFM06S050-E - Cincon:CFM06S050E")
+      (reference "PS1") (unit 1) (value "CFM06S050") (footprint "VB05-T2S05-E fromEasyEDA:VB05-T2S05-E")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/ae1adeb7-7f65-43e4-ac7e-0a776c0504ce"
       (reference "R1") (unit 1) (value "1k") (footprint "Resistor_SMD:R_0603_1608Metric")
