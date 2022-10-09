@@ -1,0 +1,1042 @@
+#pre-compiler variables to change for each new device
+substitutions:
+  devicename: wood_drill_press
+  upper_devicename: W Drill Press #for display in Home Assistant
+  badge_name_uid: wood_drill_press #as the unique name for the badge
+  enable_timeout_delay: 1min
+
+# The following are the calibration for current-based actions
+# Allthough the device may not be, think of this like a sawstop tablesaw
+  standby_lowEnd: '0.25'   # smallest current of a standby mode
+  running_lowEnd: '1.00'   # smallest current when motor spinning
+  cutting_lowEnd: '1.50'   # smallest current when making light cuts
+  cutting_highEnd: '2.50'  # largest current before motor stall
+  calibration: '1.00'      # multiplier to calibrate current draw
+#here are more electrical-monitoring configurations to play with
+  tool_voltage: '110'
+  current_update_interval_fast: 1000ms
+  current_update_interval_slow: 15min
+
+# Add in the unique device ID
+# It is recommend you use the device's MAC address
+  unique_device_id: '0C:B8:15:B9:8E:3C'
+
+#passthrough for all secrets from consolidated top-level secrets file | DON'T TOUCH
+  api_encryption_key: !secret api_encryption_key                     #| DON'T TOUCH
+  ota_password: !secret ota_password                                 #| DON'T TOUCH
+  wifi_ssid: !secret wifi_ssid                                       #| DON'T TOUCH
+  wifi_password: !secret wifi_password                               #| DON'T TOUCH
+  fallback_wifi_ssid: "${devicename}_fallback" #max length 32 CHAR   #| DON'T TOUCH
+  fallback_password: !secret fallback_password                       #| DON'T TOUCH
+  auth_ip: !secret auth_ip                                           #| DON'T TOUCH
+  auth_port: !secret auth_port                                       #| DON'T TOUCH
+#passthrough for all secrets from consolidated top-level secrets file | DON'T TOUCH
+
+# Enable logging
+# more needs completed here ----------------------------------------------------??? logging to external DB
+logger:
+  level: DEBUG
+
+
+#--------------------------- Device Configuration -----------------------------#
+#------------------------------------------------------------------------------#
+#  /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\  #
+# /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \ #
+#/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \#
+#\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /#
+# \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  / #
+#  \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/  #
+#  /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\  #
+# /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \ #
+#/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \#
+#\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /\    /#
+# \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  /  \  / #
+#  \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/    \/  #
+#------------------------------------------------------------------------------#
+esphome:
+  #https://esphome.io/components/esphome.html
+  name: $devicename
+  # name_add_mac_suffix: true
+  project:
+    name: "MakeHaven.Authorization"
+    version: "2.0.0"
+  on_boot:
+    priority: -100 #after set-up is basically finished
+    then:
+      - script.execute: "alert_yes"
+      - script.execute: "read_dip" #only if device or combo
+
+#board configuration
+esp32:
+  board: az-delivery-devkit-v4
+  framework:
+    type: arduino
+
+globals:
+#monitoring tool current
+  - id: "tool_amps_index"
+    type: int
+    restore_value: no #saves on memory to say no here
+    initial_value: "0"
+  - id: device_running
+    type: bool
+    restore_value: no #saves on memory to say no here
+    initial_value: 'false'
+#used for holding tool auth responses
+  - id: "card_uid"
+    type: std::string
+    restore_value: no # Strings cannot be saved/restored
+    initial_value: ""
+  - id: "member_uid"
+    type: int
+    restore_value: no #saves on memory to say no here
+    initial_value: "0"
+  - id: "member_name"
+    type: std::string
+    restore_value: no # Strings cannot be saved/restored
+    initial_value: '"homer simpson"'
+  - id: "session_uid"
+    type: int
+    restore_value: no #saves on memory to say no here
+    initial_value: "0"
+#used for holding card read/ tool auth responses
+  - id: "http_error"
+    type: bool
+    restore_value: no #saves on memory to say no here
+    initial_value: 'false'
+  - id: "can_use_tool"
+    type: bool
+    restore_value: no #saves on memory to say no here
+    initial_value: 'false'
+#------------------------------------------------------------
+# https://esphome.io/components/api.html
+api:
+  encryption:
+    key: ${api_encryption_key}
+  services:
+  # Quart server determined member authorized to use tool, after RFID read
+    - service: auth_enable
+      variables:
+        member_uid:  int
+        member_name: string
+        card_uid:    string
+        session_uid: int
+      then:
+        - globals.set:
+            id: member_name
+            value: !lambda "return member_name;"
+        - globals.set:
+            id: member_uid
+            value: !lambda "return member_uid;" #int type
+        - globals.set:
+            id: card_uid
+            value: !lambda "return card_uid;"
+        - globals.set:
+            id: session_uid
+            value: !lambda "return session_uid;" #int type
+        - script.execute: device_control_w_ade7953
+  # Member activated session on a different tool, from shared RFID reader
+    - service: other_picked
+      then:
+        - script.execute: clear_user_memory
+        - light.turn_off:
+            id: neopixels
+        - script.execute: enable_off
+    # Member activated session on a different tool, from shared RFID reader
+    - service: tool_com_error
+      then:
+        - script.execute: clear_user_memory
+        - light.turn_off:
+            id: neopixels
+        - script.execute: alert_tool_com_error
+# https://esphome.io/components/ota.html
+ota:
+  password: ${ota_password}
+# https://esphome.io/components/wifi.html
+wifi:
+  ssid: ${wifi_ssid}
+  password: ${wifi_password}
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  # ESP will host this WiFi to let Shop Manager put it back on network
+  ap:
+    ssid: ${fallback_wifi_ssid}
+    password: ${fallback_password}
+captive_portal: #needed for fallback hotspot
+# save the flash memory by read/writing less often
+preferences:
+  flash_write_interval: 1min
+#https://esphome.io/components/http_request.html
+http_request:
+  id: "http_request_data"
+  useragent:
+    "ESPHome/${upper_devicename}"
+  # timeout: 10s
+#https://esphome.io/components/i2c.html
+i2c:
+  sda: GPIO21 #GPIO21 on combo
+  scl: GPIO22 #GPIO22 on combo
+  scan: true
+  id: "wire"
+#https://esphome.io/components/spi.html
+spi:
+  clk_pin: GPIO18 #GPIO18 on combo
+  mosi_pin: GPIO23 #GPIO23 on combo
+  miso_pin: GPIO19 #GPIO19 on combo
+  id: "vspi"
+#--------------------------------------------------------------------------------
+button:
+  - platform: restart #https://esphome.io/components/switch/restart.html
+    name: "${upper_devicename} Restart"
+  - platform: safe_mode #https://esphome.io/components/switch/safe_mode.html
+    name: "${upper_devicename} Restart (Safe Mode)"
+switch:
+  #the two switches that act as the 'SET' and 'RESET' of the self-latching relay system
+  # https://esphome.io/components/switch/index.html
+  - platform: output
+    name: "${upper_devicename} Stage 1 'Latch SET' Relay" #'set' as in this enables the tool to turn on
+    output: s1_set_relay
+  - platform: output
+    name: "${upper_devicename} Stage 1 'Latch RESET' Relay" #'reset' as in breaks the active self-latch
+    output: s1_reset_relay
+
+  #This switch is just here so it Shows up in Home Assistant
+  # https://esphome.io/components/switch/index.html
+  - platform: output
+    name: "${upper_devicename} Software Bypass || S1 SET" #'set' as in this enables the tool to turn on
+    output: "s1_set_relay"
+    on_turn_on:
+      - logger.log: "${upper_devicename} Software Bypass activated"
+      - light.turn_on:
+            id: neopixels
+            effect: rainbow
+      - output.turn_off: "s1_reset_relay" #just in case
+      - output.turn_on: "s1_set_relay"
+    on_turn_off:
+      - logger.log: "${upper_devicename} Software Bypass deactivated"
+      - light.turn_off:
+            id: neopixels
+      # - output.turn_on: "s1_reset_relay"  #decided to remove so it does not end active tool session
+      - output.turn_off: "s1_set_relay"
+      # - delay: 0.5s                       #decided to remove so it does not end active tool session
+      # - output.turn_off: "s1_reset_relay" #decided to remove so it does not end active tool session
+#https://esphome.io/components/light/neopixelbus.html
+light:
+  - platform: neopixelbus
+    name: "${upper_devicename} Neopixels"
+    id: neopixels
+    type: GRB
+    variant: WS2812
+    pin: GPIO13 #GPIO13 on combo
+    num_leds: 1 #this was 60 on the testing setup, without a problem
+    effects:
+      - addressable_rainbow:
+          name: "rainbow"
+          speed: 20
+          width: 30
+      - addressable_color_wipe:
+          name: "yes"
+          colors:
+            - red: 0%
+              green: 100%
+              blue: 0%
+              num_leds: 1
+            - red: 0%
+              green: 0%
+              blue: 0%
+              num_leds: 1
+          add_led_interval: 250ms
+          reverse: false
+      - addressable_color_wipe:
+          name: "no"
+          colors:
+            - red: 100%
+              green: 0%
+              blue: 0%
+              num_leds: 1
+            - red: 0%
+              green: 0%
+              blue: 0%
+              num_leds: 1
+          add_led_interval: 250ms
+          reverse: false
+      - addressable_color_wipe:
+          name: "server_error"
+          colors:
+            - red: 0%
+              green: 0%
+              blue: 100%
+              num_leds: 1
+            - red: 0%
+              green: 0%
+              blue: 0%
+              num_leds: 1
+          add_led_interval: 250ms
+          reverse: false
+      - addressable_color_wipe:
+          name: "tool_error"
+          colors:
+            - red: 100%
+              green: 0%
+              blue: 100%
+              num_leds: 1
+            - red: 0%
+              green: 0%
+              blue: 0%
+              num_leds: 1
+          add_led_interval: 250ms
+          reverse: false
+      - addressable_color_wipe:
+          name: "enforced buddy"
+          colors:
+            - red: 100%
+              green: 100%
+              blue: 0%
+              num_leds: 1
+            - red: 0%
+              green: 0%
+              blue: 0%
+              num_leds: 1
+          add_led_interval: 250ms
+          reverse: false
+#https://esphome.io/components/binary_sensor/pn532.html
+pn532_spi:
+  cs_pin: GPIO5 #GPIO5 on combo
+  update_interval: 1s
+  on_tag:
+    then:
+      - globals.set:
+          id: card_uid
+          value: !lambda 'return x;'
+      - script.execute: http_auth_request
+# device needed for the buzzer to function
+# https://esphome.io/components/rtttl.html
+rtttl:
+  output: buzzer
+output:
+  #https://esphome.io/components/rtttl.html
+  - platform: ledc
+    pin: GPIO25 #GPIO25 on combo
+    id: buzzer
+  #https://esphome.io/components/switch/output.html
+  - platform: gpio
+    pin: GPIO27 #GPIO27 on combo
+    id: s1_reset_relay #might use on_turn_on: https://esphome.io/components/switch/gpio.html#momentary-switch
+  #https://esphome.io/components/switch/output.html
+  - platform: gpio
+    pin: GPIO16 #GPIO16 on combo
+    id: s1_set_relay
+#https://esphome.io/components/sensor/ade7953.html
+#our application of the ADE7953 only measures current - not voltage [now...]
+#|=============================================================================|
+#|   For the "tool_amps_index" we need to think about 4 levels of current:     |
+#|   0: tool OFF - nothing turned on, and not in any active standby mode       |
+#|   1: tool ON, but in full idle (think: controller on, motor not spinning)   |
+#|   2: tool ON & unloaded motor (think: saw spinning, but not cutting wood)   |
+#|   3: tool ON & actively loaded (think: table saw is actively cutting wood)  |
+#|   4: tool ON & over loaded (think: table saw blade has stalled)             |
+#| --------------------------------------------------------------------------- |
+#|   These current-based levels are set at each reading of the tool            |
+#|      values will need calibrated manually with a known load                 |
+#|=============================================================================|
+#|   We should expect the current in to equal the current out for a circuit.   |
+#|   With two current-sensing channels, we should be able to verify this.      |
+#| --------------------------------------------------------------------------- |
+#|     If there is a big difference, we can shut off the tool (like GFCI).     |
+#|=============================================================================|
+interval:
+  - interval: ${current_update_interval_fast}
+    then:
+      - if:
+          condition:
+            - lambda: 'return id(device_running);'
+          then:
+            - component.update: current_sensor
+  - interval: 15min
+    then:
+      - if:
+          condition:
+            - lambda: 'return id(uptime_sensor).state >= 60*5;'
+          then:
+            - component.update: uptime_sensor
+sensor:
+  - platform: ade7953
+    irq_pin: GPIO14 #GPIO14 on combo v1
+    id: current_sensor
+    current_a:
+      name: "${upper_devicename} ADE7953-A"
+      id: currentA
+            #the 'HOT' line or L1
+      filters:
+        - sliding_window_moving_average: #https://esphome.io/components/sensor/index.html#sliding-window-moving-average
+            window_size: 15
+            send_every: 15
+            send_first_at: 1
+      on_value:
+        - lambda: 'id(power_use).publish_state(id(currentA).state*${tool_voltage});'
+      on_value_range:
+        - below: ${standby_lowEnd}
+          then:
+          #0: tool OFF - nothing turned on, and not in any active standby mode
+            - globals.set:
+                id: "tool_amps_index"
+                value: '0'
+            - lambda: 'id(current_summary).publish_state("tool OFF");'
+        - above: ${standby_lowEnd}
+          then:
+          #1: tool ON, but in full idle (think: controller on, motor not spinning)
+            - globals.set:
+                id: "tool_amps_index"
+                value: '1'
+            - lambda: 'id(current_summary).publish_state("tool ON | standby");'
+        - above: ${running_lowEnd}
+          then:
+          #2: tool ON & free spinning motor (think: saw spinning, but not cutting wood)
+            - globals.set:
+                id: "tool_amps_index"
+                value: '2'
+            - lambda: 'id(current_summary).publish_state("tool ON | free running");'
+        - above: ${cutting_lowEnd}
+          then:
+          #3: tool ON & actively loaded (think: table saw is actively cutting wood)
+            - globals.set:
+                id: "tool_amps_index"
+                value: '3'
+            - lambda: 'id(current_summary).publish_state("tool ON | actively in use");'
+        - above: ${cutting_highEnd}
+          then:
+          #4: tool ON & actively loaded (think: table saw is actively cutting wood)
+            - globals.set:
+                id: "tool_amps_index"
+                value: '4'
+            - lambda: |-
+                id(current_summary).publish_state("tool ON | over-current warning");
+                ESP_LOGI("main", "${upper_devicename} experienced current draw over calibrated cutting_highEnd");
+    current_b:
+      name: "${upper_devicename} ADE7953-B"
+      id: currentB
+            #the 'Neutral' line or L2
+      filters:
+        - sliding_window_moving_average: #https://esphome.io/components/sensor/index.html#sliding-window-moving-average
+            window_size: 15
+            send_every: 15
+            send_first_at: 1
+      on_value:
+        - lambda: 'id(leaking_current).publish_state(id(currentA) - id(currentB));'
+    update_interval: ${current_update_interval_slow}
+  # monitor Current Leakage for possible control as a software GFCI
+  # https://esphome.io/components/sensor/index.html
+  - platform: template
+    name: "${upper_devicename} Ground Fault"
+    id: leaking_current
+    unit_of_measurement: "A"
+    internal: false
+    icon: "mdi:alert"
+  # Calculate the power consumed by the tool in this simulated sensor
+  # https://esphome.io/components/sensor/index.html
+  - platform: template
+    name: "${upper_devicename} Calculated Power"
+    id: power_use
+    unit_of_measurement: "W"
+    internal: false
+    icon: "mdi:transmission-tower"
+  # Single Number to represent the DIP switch state
+  # https://esphome.io/components/sensor/index.html
+  - platform: template
+    # name: "${upper_devicename} DIP number"
+    id: dip_num
+    internal: false
+  # https://esphome.io/components/sensor/wifi_signal.html
+  - platform: wifi_signal
+    name: "${upper_devicename} WiFi Signal Sensor"
+    update_interval: 1h
+  # show in Home Assistant meaningful uptime clock
+  # https://esphome.io/components/sensor/uptime.html#human-readable-sensor
+  - platform: uptime
+    name: "${upper_devicename} Uptime Sensor"
+    id: uptime_sensor
+    update_interval: 60s
+    on_raw_value:
+      then:
+        - text_sensor.template.publish:
+            id: uptime_human
+            state: !lambda |-
+              int seconds = round(id(uptime_sensor).raw_state);
+              int days = seconds / (24 * 3600);
+              seconds = seconds % (24 * 3600);
+              int hours = seconds / 3600;
+              seconds = seconds % 3600;
+              int minutes = seconds /  60;
+              seconds = seconds % 60;
+              return (
+                (days ? to_string(days) + "d " : "") +
+                (hours ? to_string(hours) + "h " : "") +
+                (minutes ? to_string(minutes) + "m " : "") +
+                (to_string(seconds) + "s")
+              ).c_str();
+text_sensor:
+  # show in Home Assistant meaningful uptime clock
+  # https://esphome.io/components/sensor/uptime.html#human-readable-sensor
+  - platform: template
+    name: "${upper_devicename} Uptime Human Readable"
+    id: uptime_human
+    icon: mdi:clock-start
+  # show text in Home Assistant to summarize board configuration
+  # https://esphome.io/components/text_sensor/index.html
+  - platform: template    #for use with DIP switches
+    name: "${upper_devicename} Board Config"
+    id: board_config
+    internal: false
+    icon: mdi:chip
+  # show in Home Assistant meaningful current-use caregories (after calibration)
+  # https://esphome.io/components/text_sensor/index.html
+  - platform: template    #for use with ADE7953
+    name: "${upper_devicename} Current Summary"
+    id: current_summary
+    internal: false
+    icon: mdi:meter-electric
+binary_sensor:
+  # dip switch to inform board configuration
+  # https://esphome.io/components/binary_sensor/gpio.html
+  # We cannot "enforce" the DIP switches, but it helps to know
+  # how the board is configured when looking on Home Assistant
+  - platform: gpio
+    pin: GPIO33 #GPIO33 on combo
+    name: "${upper_devicename} DIP 1"
+    id: dip_1
+  - platform: gpio
+    pin: GPIO15 #GPIO32 on combo
+    name: "${upper_devicename} DIP 2"
+    id: dip_2
+  - platform: gpio
+    pin: GPIO39 #GPIO39 on combo
+    name: "${upper_devicename} DIP 3"
+    id: dip_3
+  - platform: gpio
+    pin: GPIO36 #GPIO36 on combo
+    name: "${upper_devicename} DIP 4"
+    id: dip_4
+  # E-Stop reading to identify the current state of the E-Stop on device
+  # https://esphome.io/components/binary_sensor/gpio.html
+  - platform: gpio
+    pin: GPIO14 #GPIO14 on combo
+    name:
+      "${upper_devicename} E-Stop"
+    id: e_stop
+    filters:
+      invert:
+  # It takes two inputs to accurately read the state of the manual bypass
+  # https://esphome.io/components/binary_sensor/gpio.htmlbypass
+  - platform: gpio
+    pin: GPIO17 #GPIO17 on combo
+    id: device_enable #that device is enabled by software
+  - platform: gpio
+    pin: GPIO26 #GPIO26 on combo
+    name:
+      "${upper_devicename} Bypass Key is:"
+    id: read_bypass #that bypass key is turned 'ON'
+    filters:
+      - delayed_on_off: 300ms
+      - lambda: |-
+          if(id(device_enable) && !x){
+            return false;
+          }else{
+            return true;
+          }
+    on_state:
+      then:
+        - if:
+            condition:
+              - lambda: |-
+                  return id(read_bypass);
+            then:
+              - light.turn_on:
+                  id: neopixels
+                  effect: rainbow
+            else:
+              - light.turn_off:
+                  id: neopixels
+script:
+  #light and sound to show a web-based-error in communicating with the tool
+  # https://esphome.io/guides/automations.html#script-component
+  - id: alert_tool_com_error
+    mode: single
+    then:
+      - script.stop: alert_no
+      - script.stop: alert_yes
+      - script.stop: alert_server_error #for completeness, probably never used
+      - light.turn_on:
+          id: neopixels
+          effect: tool_error
+      - rtttl.play: "GoodBad:d=4,o=5,b=70:32p,32a#,32d#6,32a#,32d#6,8a#.,16f#.,16g#.,d#,32a#,32d#6,32a#,32d#6,8a#.,16f#.,16g#.,c#6,32a#,32d#6,32a#,32d#6,8a#.,16f#.,32f.,32d#.,c#"
+      - delay: 5s
+      - light.turn_off:
+          id: "neopixels"
+  #light and sound to show a web-based-error-type message
+  # https://esphome.io/guides/automations.html#script-component
+  - id: alert_server_error
+    mode: single
+    then:
+      #if tool drawing enough current, don't shut off
+      - light.turn_on:
+          id: neopixels
+          effect: server_error
+      - rtttl.play: "part_Jeopardy:d=4,o=6,b=140:c,f,c,f5,c,f,2c,c,f,c,f,a.,8g,8f,8e,8d,8c#,c,f,c,f5,c,f,2c,f.,8d,c,a#5,a5,g5,f5"
+      - delay: 5s
+      - light.turn_off:
+          id: "neopixels"
+  #light and sound to show a denial-type message
+  # https://esphome.io/guides/automations.html#script-component
+  - id: alert_no
+    mode: single
+    then:
+      #if tool drawing enough current, don't shut off
+      - light.turn_on:
+          id: "neopixels"
+          effect: "no"
+      - rtttl.play: "almost_Gadget:d=16,o=5,b=75:32d#,32f,32f#,32g#,a#,f#,a,f,g#,f#,8d#"
+      - delay: 2s
+      - light.turn_off:
+          id: "neopixels"
+  #light and sound to show a confirmation-type message
+  # https://esphome.io/guides/automations.html#script-component
+  - id: alert_yes
+    mode: single
+    then:
+      #if tool drawing enough current, don't shut off
+      - light.turn_on:
+          id: "neopixels"
+          effect: "yes"
+      - rtttl.play: "part_Smurfs:d=32,o=5,b=250:4c#6,16p,4f#6,p,16c#6,p,8d#6,p,8b,p,4g#"
+      - delay: 2s
+      - light.turn_off:
+          id: "neopixels"
+  #Control the tools -- heavily influenced by the DIP configurations
+  # https://esphome.io/guides/automations.html#script-component
+  - id: device_control_w_ade7953
+    mode: single
+    then:
+      - script.execute: reset_permissions #will change this when we get to proper logging
+      - script.execute: enable_on #<---enable action & timeout
+      - globals.set:
+          id: device_running
+          value: 'true' #causes current measuring to enter 100ms intervals
+      - wait_until:
+          condition:
+            - lambda: 'return id(tool_amps_index) >= 1;' #the tool is at least in standby
+          timeout: $enable_timeout_delay #how long to let member turn on tool
+      - if:
+          condition:
+            - lambda: 'return id(tool_amps_index) >= 1;' #the tool is at least in standby
+          then:
+            - script.stop: enable_timeout #there are some leds to turn off
+            - script.execute: session_start #send message to Server
+            - light.turn_off:
+                id: neopixels
+            - script.execute: forget_timeout #forgot the device in standby mode
+            - script.execute: running_forget_timeout #forgot the device in standby mode
+
+            - while:
+                condition:
+                  - lambda: 'return id(tool_amps_index) >= 1;' #the tool is at least spinning
+                then:
+                  - if:
+                      condition:
+                        or:
+                          - script.is_running: forget_timeout
+                          - script.is_running: running_forget_timeout
+                      then:
+                        - delay: 1s
+                        - while:
+                            condition:
+                              - lambda: 'return id(tool_amps_index) >= 2;' #the tool is at least spinning
+                            then:
+                              - script.execute: forget_timeout #forgot the device in standby mode
+                              # - delay: 10s #don't need to break/make timers too often (non-blocking delay)
+                              - while:
+                                  condition:
+                                    - lambda: 'return id(tool_amps_index) >= 3;' #the tool is at least spinning
+                                  then:
+                                    - script.execute: running_forget_timeout #forgot the device in standby mode
+            - script.execute: latch_reset #turn off tool -- redundant if the memberr pressed red button. essential for timeouts
+            - if:
+                condition:
+                  - script.is_running: forget_timeout #member manually shut off tool
+                then:
+                  - if:
+                      condition:
+                        binary_sensor.is_on: e_stop #member used the e-stop
+                      then:
+                        - script.execute: session_end_estop #used the estop
+                      else:
+                        - script.execute: session_end #used the red button
+                else:
+                  - if:
+                      condition:
+                        - script.is_running: running_forget_timeout #member manually shut off tool
+                      then:
+                        - script.execute: session_end_timeout #machine timed out in standby
+                      else:
+                        - script.execute: session_end_long_timeout #machine timed out while spinning
+          else:
+            - script.execute: session_never_started_tool #member swiped card, never started tool
+            - light.turn_off:
+                id: neopixels
+      - globals.set:
+          id: device_running
+          value: 'false' #returns current measuring to 15min intervals
+      - script.stop: forget_timeout
+      - script.stop: running_forget_timeout
+      - script.execute: clear_user_memory
+  #Control the short process for putting tools into their "ready to turn on" mode
+  # https://esphome.io/guides/automations.html#script-component
+  - id: enable_on
+    mode: single
+    then:
+      #process to enable the tool after card read
+      - output.turn_off: s1_reset_relay #just-in-case
+      - output.turn_on: s1_set_relay
+      - script.execute: enable_timeout
+      - script.wait: enable_timeout
+      - output.turn_off: s1_set_relay
+      - light.turn_off:
+          id: neopixels
+  #Control the short process for putting tools into their "ready to turn on" mode
+  # https://esphome.io/guides/automations.html#script-component
+  - id: enable_off
+    mode: single
+    then:
+      - script.stop: enable_timeout
+      - output.turn_off: s1_set_relay
+      # - script.execute: latch_reset #don't want to reset another tool while someonw may be using it
+
+  #Control the short process for automatically turning off a tool (after countdown)
+  # https://esphome.io/guides/automations.html#script-component
+  - id: latch_reset
+    mode: single
+    then:
+      #--------------------------------------------------
+      - script.execute: latch_off
+      - light.turn_on:
+          id: neopixels
+          effect: "no"
+      - delay: 1s
+      - light.turn_off:
+          id: neopixels
+  #Control the short process for automatically turning off a tool (after countdown)
+  # https://esphome.io/guides/automations.html#script-component
+  - id: latch_off
+    mode: single
+    then:
+      #process to shut off the tool automatically
+      - output.turn_off: s1_set_relay #just in case
+      - output.turn_on: s1_reset_relay
+      - delay: 100ms
+      - output.turn_off: s1_reset_relay
+  #Complex process for reading the DIP switches and then setting configuration based on that reading
+  #   This process is broken into several sections, and should be considered as such.
+  # https://esphome.io/guides/automations.html#script-component
+  - id: read_dip
+    mode: single
+    then:
+      - script.execute: read_dip_bin
+      - script.execute: read_dip_switch_case
+
+  - id: read_dip_bin
+    mode: single
+    then:
+      - lambda: |-
+          // First, read the switchs & bitshift up the number
+          // because each represents a binary digit | sum: 15
+          int dip = 0;
+          dip = dip + id(dip_4).state;
+          dip = dip << 1;
+          dip = dip + id(dip_3).state;
+          dip = dip << 1;
+          dip = dip + id(dip_2).state;
+          dip = dip << 1;
+          dip = dip + id(dip_1).state;
+          id(dip_num).publish_state(dip);
+
+  - id: read_dip_switch_case
+    mode: single
+    then:
+      - lambda: |-
+
+          // Switch-case sets the board-config and a few other global variables for operation.
+          // This is a critical step, as it controls many of the other high-level scripts to follow.
+          // Remember this happens only once at boot, do not change globals afterwards...
+          int num = (int)id(dip_num).state;
+          switch (num)  {
+            case 0:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 110VAC 1PH Contactor");
+              break;
+            case 1:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            case 2:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            case 3:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            case 4:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            case 5:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            case 6:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            case 7:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            case 8:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            case 9:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            case 10:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            case 11:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            case 12:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            case 13:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            case 14:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            case 15:
+              id(board_config).publish_state("E-Stop | 110VAC S2 Relay | 440VAC 3PH Contactor");
+              break;
+            default:
+              id(board_config).publish_state("unknown");
+          }
+
+  #Change the three global variables that 'remember' member-id back to default (empty)
+  # https://esphome.io/guides/automations.html#script-component
+  - id: clear_user_memory
+    mode: single
+    then:
+      - lambda: |-
+          id(card_uid) = "";
+          id(member_uid) = 0;
+          id(member_name) = "";
+          id(session_uid) = 0;
+  #Change the two global variables that control Authorization back to default (same as denial)
+  # https://esphome.io/guides/automations.html#script-component
+  - id: reset_permissions
+    mode: single
+    then:
+      - lambda: |-
+          id(can_use_tool) = false;
+          id(http_error) = false;
+  # ------------------------ New API endpoint ----------------------------------
+  # http://192.168.1.170:7980/auth/check  {http POST + JSON data}
+  #
+  - id: http_auth_request
+    mode: single
+    then:
+      - http_request.post:
+          url: "http://${auth_ip}:${auth_port}/toolauth/authreq"
+          headers:
+            Content-Type: application/json
+          verify_ssl: false
+          json: |-
+            root["device_name"] = "${badge_name_uid}";  //text-based name for tool intended to use
+            root["device_uid"] = "${unique_device_id}"; //some kind of ID number for tool intended
+            root["reader_name"] = "${badge_name_uid}";  //text-based name for card reader
+            root["reader_uid"] = "${unique_device_id}"; //some kind of ID number for card reader
+            root["card_uid"]   = id(card_uid);          //the card_uid of member asking for permission
+          on_response:
+            then:
+              - lambda: |-
+                  if(status_code == 200){
+                    id(can_use_tool) = true;
+                  }else if(status_code == 403){
+                    id(can_use_tool) = false;
+                    id(http_error) = false;
+                  }else{
+                    id(http_error) = true;
+                  }
+              - if:
+                  condition:
+                    lambda: 'return id(can_use_tool);'
+                  then:
+                    - script.execute: alert_yes
+                    - script.wait: alert_yes
+                    - light.turn_on:
+                        id: neopixels
+                        effect: rainbow
+                  else:
+                    - if:
+                        condition:
+                          lambda: 'return id(http_error);'
+                        then:
+                          - script.execute: alert_server_error
+                        else:
+                          - script.execute: alert_no
+  #send a message to say the member's session ended, and include if there is current tracking in the 'action' data area
+  # https://esphome.io/components/http_request.html#post-body-in-json-format-syntax-2
+  - id: session_end_estop
+    mode: single
+    then:
+      - http_request.post:
+          url: "http://${auth_ip}:${auth_port}/toolauth/session"
+          headers:
+            Content-Type: application/json
+          verify_ssl: false
+          json: |-
+            const char* msg = "e_stop";
+            ESP_LOGI("main", msg);
+            root["member_uid"] = id(member_uid);
+            root["member_name"] = id(member_name);
+            root["card_uid"] = id(card_uid);
+            root["session_uid"] = id(session_uid);
+            root["active_session"] = id(device_running); //true
+            root["action"] = msg;
+            root["device_uid"] = "${unique_device_id}";
+            root["device_name"] = "${devicename}";
+
+    # member_uid:  int  # a number to keep track of members || easier data search
+    # member_name: str  # their name for possible display on screens, stickers, etc. || easier data search
+    # card_uid: str     # the actual number straight from their card, possibly without "-" || easier data search
+    # session_uid: int  # a number to keep track of individual card/tool use sessions || easier data search
+    # active_session: bool  # the state of the tool session ~ might change this to 'session'
+    # action: str       # the reason this message is being sent (could be coded to int)
+    # device_uid: str   # a number to keep track of the devices || easier data search
+    # device_name: str  # the name of the tool || easier data search
+
+
+  #send a message to say the member's session ended, and include if there is current tracking in the 'action' data area
+  # https://esphome.io/components/http_request.html#post-body-in-json-format-syntax-2
+  - id: session_end_long_timeout
+    mode: single
+    then:
+      - http_request.post:
+          url: "http://${auth_ip}:${auth_port}/toolauth/session"
+          headers:
+            Content-Type: application/json
+          verify_ssl: false
+          json: |-
+            const char* msg = "long timeout";
+            ESP_LOGI("main", msg);
+            root["member_uid"] = id(member_uid);
+            root["member_name"] = id(member_name);
+            root["card_uid"] = id(card_uid);
+            root["session_uid"] = id(session_uid);
+            root["active_session"] = id(device_running); //true
+            root["action"] = msg;
+            root["device_uid"] = "${unique_device_id}";
+            root["device_name"] = "${devicename}";
+  #send a message to say the member's session ended, and include if there is current tracking in the 'action' data area
+  # https://esphome.io/components/http_request.html#post-body-in-json-format-syntax-2
+  - id: session_end_timeout
+    mode: single
+    then:
+      - http_request.post:
+          url: "http://${auth_ip}:${auth_port}/toolauth/session"
+          headers:
+            Content-Type: application/json
+          verify_ssl: false
+          json: |-
+            const char* msg = "timeout";
+            ESP_LOGI("main", msg);
+            root["member_uid"] = id(member_uid);
+            root["member_name"] = id(member_name);
+            root["card_uid"] = id(card_uid);
+            root["session_uid"] = id(session_uid);
+            root["active_session"] = id(device_running); //true
+            root["action"] = msg;
+            root["device_uid"] = "${unique_device_id}";
+            root["device_name"] = "${devicename}";
+  #send a message to say the member's session ended, and include if there is current tracking in the 'action' data area
+  # https://esphome.io/components/http_request.html#post-body-in-json-format-syntax-2
+  - id: session_end
+    mode: single
+    then:
+      - http_request.post:
+          url: "http://${auth_ip}:${auth_port}/toolauth/session"
+          headers:
+            Content-Type: application/json
+          verify_ssl: false
+          json: |-
+            const char* msg = "member red button";
+            ESP_LOGI("main", msg);
+            root["member_uid"] = id(member_uid);
+            root["member_name"] = id(member_name);
+            root["card_uid"] = id(card_uid);
+            root["session_uid"] = id(session_uid);
+            root["active_session"] = id(device_running); //true
+            root["action"] = msg;
+            root["device_uid"] = "${unique_device_id}";
+            root["device_name"] = "${devicename}";
+  #send a message to say the member's session ended, and include if there is current tracking in the 'action' data area
+  # https://esphome.io/components/http_request.html#post-body-in-json-format-syntax-2
+  - id: session_start
+    mode: single
+    then:
+      - http_request.post:
+          url: "http://${auth_ip}:${auth_port}/toolauth/session"
+          headers:
+            Content-Type: application/json
+          verify_ssl: false
+          json: |-
+
+            const char* msg = "session start";
+            ESP_LOGI("main", msg);
+            root["member_uid"] = id(member_uid);
+            root["member_name"] = id(member_name);
+            root["card_uid"] = id(card_uid);
+            root["session_uid"] = id(session_uid);
+            root["active_session"] = id(device_running); //true
+            root["action"] = msg;
+            root["device_uid"] = "${unique_device_id}";
+            root["device_name"] = "${devicename}";
+  #the member never pressed the green button...
+  # https://esphome.io/components/http_request.html#post-body-in-json-format-syntax-2
+  - id: session_never_started_tool
+    mode: single
+    then:
+      - http_request.post:
+          url: "http://${auth_ip}:${auth_port}/toolauth/session"
+          headers:
+            Content-Type: application/json
+          verify_ssl: false
+          json: |-
+            const char* msg = "never pressed green button";
+            ESP_LOGI("main", msg);
+            root["member_uid"] = id(member_uid);
+            root["member_name"] = id(member_name);
+            root["card_uid"] = id(card_uid);
+            root["session_uid"] = id(session_uid);
+            root["active_session"] = id(device_running); //true
+            root["action"] = msg;
+            root["device_uid"] = "${unique_device_id}";
+            root["device_name"] = "${devicename}";
+  # how long to hold open the 'device enabled' after an RFID card swipe
+  # https://esphome.io/guides/automations.html#script-component
+  - id: enable_timeout
+    mode: single # https://esphome.io/guides/automations.html#script-component
+    then:
+      - logger.log: "${upper_devicename} enable window started"
+      - delay: $enable_timeout_delay #how long you have between Auth & end of 'enabled' window
+  #Don't turn off the tool while someone is in the middle of using it.
+  # https://esphome.io/guides/automations.html#script-component
+  - id: forget_timeout
+    mode: restart # https://esphome.io/guides/automations.html#script-component
+    then:
+      - delay: 10min #time to wait after cutting stops
+  #Don't turn off the tool while someone is in the middle of using it.
+  #But definitely turn it off if it has been running unused (our jointer spins quiet)
+  # https://esphome.io/guides/automations.html#script-component
+  - id: running_forget_timeout
+    mode: restart # https://esphome.io/guides/automations.html#script-component
+    then:
+      - delay: 45min #time to wait after cutting stops
