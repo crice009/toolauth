@@ -60,23 +60,11 @@
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/d0ead168-68e1-44d6-acc2-e54fead118c1"
       (reference "#PWR02") (unit 1) (value "+5V") (footprint "")
     )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/21066e28-7ce6-46c4-aabb-0fe06b158c67"
-      (reference "#PWR03") (unit 1) (value "+3V3") (footprint "")
-    )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/03fcbdb2-b137-4c2d-a7b2-893aa234b1e3"
-      (reference "#PWR04") (unit 1) (value "+3V3") (footprint "")
-    )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/32dbe2a5-192d-47d6-9152-bdfed913a31c"
-      (reference "#PWR05") (unit 1) (value "+3V3") (footprint "")
-    )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/5a5be1bc-52e7-4512-a2bf-bb5f41f7016c"
       (reference "#PWR06") (unit 1) (value "+5V") (footprint "")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/30b309d5-d5e3-4aae-89d4-9ed64ee82c79"
       (reference "#PWR07") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/fb4ed70c-8732-41fd-88d3-377071ebeb78"
-      (reference "#PWR09") (unit 1) (value "+3V3") (footprint "")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/aea97b9a-c12e-497a-8c8e-334a6494da5d"
       (reference "#PWR010") (unit 1) (value "+5V") (footprint "")
@@ -263,6 +251,18 @@
     )
     (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/fd75559e-77bb-4f15-bd9f-e39243a04df3/8f0bfec3-b758-44c6-a0f9-1f90cac4bfe1"
       (reference "#PWR0164") (unit 1) (value "+5V") (footprint "")
+    )
+    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/1abe454a-a4d7-4be9-aa18-9469b945a637"
+      (reference "#PWR?") (unit 1) (value "+3.3VA") (footprint "")
+    )
+    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/cf2d9a3f-5db1-404f-ba5b-8cb8798d5c3b"
+      (reference "#PWR?") (unit 1) (value "+3.3VA") (footprint "")
+    )
+    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/d21fd04a-dbc7-4620-bae1-17fdc24852bb"
+      (reference "#PWR?") (unit 1) (value "+3.3VA") (footprint "")
+    )
+    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/e27aff90-5db1-4092-bc65-45de05fb9fde"
+      (reference "#PWR?") (unit 1) (value "+3.3VA") (footprint "")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/34d7447d-980a-4ae3-bf91-7044f1ac98d3"
       (reference "BZ1") (unit 1) (value "Buzzer") (footprint "Buzzer_Beeper:Buzzer_12x9.5RM7.6")
