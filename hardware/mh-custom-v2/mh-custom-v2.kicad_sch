@@ -6,9 +6,9 @@
 
   (title_block
     (title "ToolAuth Hardware | Overview | ESP32-DEVKITC-V4")
-    (date "2022-09-25")
-    (rev "V2.1")
-    (company "MakeHaven & Corey Rice")
+    (date "2022-10-09")
+    (rev "2")
+    (company "Corey Rice & MakeHaven")
     (comment 1 "Highest Level Overview")
   )
 
@@ -16,26 +16,26 @@
   )
 
 
-  (sheet (at 67.31 116.84) (size 41.91 39.37) (fields_autoplaced)
+  (sheet (at 49.53 110.49) (size 41.91 39.37) (fields_autoplaced)
     (stroke (width 0.1524) (type solid) (color 0 0 0 0))
     (fill (color 0 0 0 0.0000))
     (uuid 3f0e9b91-fe15-47d5-84d6-aa71b368b91e)
-    (property "Sheet name" "microcontroller" (id 0) (at 67.31 116.1284 0)
+    (property "Sheet name" "microcontroller" (id 0) (at 49.53 109.7784 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
     )
-    (property "Sheet file" "microcontroller.kicad_sch" (id 1) (at 67.31 156.7946 0)
+    (property "Sheet file" "microcontroller.kicad_sch" (id 1) (at 49.53 150.4446 0)
       (effects (font (size 1.27 1.27)) (justify left top))
     )
   )
 
-  (sheet (at 166.37 116.84) (size 36.83 36.83) (fields_autoplaced)
+  (sheet (at 193.04 111.76) (size 36.83 36.83) (fields_autoplaced)
     (stroke (width 0.1524) (type solid) (color 0 0 0 0))
     (fill (color 0 0 0 0.0000))
     (uuid 6f44f9bb-3a88-498d-9739-be3794f35f17)
-    (property "Sheet name" "mainslevelcontrol" (id 0) (at 166.37 116.1284 0)
+    (property "Sheet name" "mainslevelcontrol" (id 0) (at 193.04 111.0484 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
     )
-    (property "Sheet file" "mainslevelcontrol.kicad_sch" (id 1) (at 166.37 154.2546 0)
+    (property "Sheet file" "mainslevelcontrol.kicad_sch" (id 1) (at 193.04 149.1746 0)
       (effects (font (size 1.27 1.27)) (justify left top))
     )
   )
@@ -207,6 +207,12 @@
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/03adfa84-7245-4a0a-b28d-db7d09a8f743/0af5ce2b-4582-4ceb-898c-2cd925a1715f"
       (reference "#PWR0145") (unit 1) (value "GND") (footprint "")
     )
+    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/e27aff90-5db1-4092-bc65-45de05fb9fde"
+      (reference "#PWR0146") (unit 1) (value "+3.3VA") (footprint "")
+    )
+    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/cf2d9a3f-5db1-404f-ba5b-8cb8798d5c3b"
+      (reference "#PWR0147") (unit 1) (value "+3.3VA") (footprint "")
+    )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/03adfa84-7245-4a0a-b28d-db7d09a8f743/ab2dc9bc-5a40-4d06-a528-1b4ec105e520"
       (reference "#PWR0148") (unit 1) (value "GND") (footprint "")
     )
@@ -221,6 +227,12 @@
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/03adfa84-7245-4a0a-b28d-db7d09a8f743/69cbbb0f-f79f-47ab-ac1d-e5b07b981118"
       (reference "#PWR0152") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/d21fd04a-dbc7-4620-bae1-17fdc24852bb"
+      (reference "#PWR0153") (unit 1) (value "+3.3VA") (footprint "")
+    )
+    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/1abe454a-a4d7-4be9-aa18-9469b945a637"
+      (reference "#PWR0154") (unit 1) (value "+3.3VA") (footprint "")
     )
     (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/9191b819-8102-4422-9a84-62b3b85afe01/d3ecaf8f-ad1d-48f9-b3ec-7b743e172864"
       (reference "#PWR0155") (unit 1) (value "+5V") (footprint "")
@@ -251,18 +263,6 @@
     )
     (path "/6f44f9bb-3a88-498d-9739-be3794f35f17/fd75559e-77bb-4f15-bd9f-e39243a04df3/8f0bfec3-b758-44c6-a0f9-1f90cac4bfe1"
       (reference "#PWR0164") (unit 1) (value "+5V") (footprint "")
-    )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/76df30f3-bf0f-4a81-9e12-488966ab08bf/1abe454a-a4d7-4be9-aa18-9469b945a637"
-      (reference "#PWR?") (unit 1) (value "+3.3VA") (footprint "")
-    )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/cf2d9a3f-5db1-404f-ba5b-8cb8798d5c3b"
-      (reference "#PWR?") (unit 1) (value "+3.3VA") (footprint "")
-    )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/d21fd04a-dbc7-4620-bae1-17fdc24852bb"
-      (reference "#PWR?") (unit 1) (value "+3.3VA") (footprint "")
-    )
-    (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/e27aff90-5db1-4092-bc65-45de05fb9fde"
-      (reference "#PWR?") (unit 1) (value "+3.3VA") (footprint "")
     )
     (path "/3f0e9b91-fe15-47d5-84d6-aa71b368b91e/cdc711b4-3986-4d05-ace8-22e18ebb4f7d/34d7447d-980a-4ae3-bf91-7044f1ac98d3"
       (reference "BZ1") (unit 1) (value "Buzzer") (footprint "Buzzer_Beeper:Buzzer_12x9.5RM7.6")
