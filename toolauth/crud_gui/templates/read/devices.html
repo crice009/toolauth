@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='crud.css')}}" />
+{% endblock %}
+
+{% block content %}
+<h1>Device List</h1>
+<div style="float:right;"><a href="{{ url_for('crud_gui.create_device')}}">create_device</a></div>
+<ul style="padding-left:50px;">
+    {% for device in devices if devices %}
+    <li style="padding-bottom:1rem;">{{ device.name }}<button onclick="delete_item({{ device.id }})">Delete</button>
+        <ul style="padding-left:50px;">
+            <li>MAC_addr: <span id="mac_addr">{{ device.mac_addr }}</span><button
+                    onclick="prep_update('mac_addr')">update</button></li>
+            <li>ip_addr: <span id="ip_addr">{{ device.ip_addr }}</span><button
+                    onclick="prep_update('ip_addr')">update</button></li>
+            <li>encryption_pass: <input type="text" id="api-key" onclick="this.focus();this.select()"
+                    style="width: 100px;" readonly="readonly" value="{{ device.encrypt_pass}}">
+            </li>
+            <li>ota_pass: <input type="text" id="api-key" onclick="this.focus();this.select()" style="width: 100px;"
+                    readonly="readonly" value="{{ device.ota_pass}}">
+            </li>
+            <li>has_card_reader:
+                {% if device.has_reader == 1 %}YES{% else %}NO{% endif %}<button>update</button>
+            </li>
+            <li>is_vacuum:
+                {% if device.is_vacuum == 1 %}YES{% else %}NO{% endif %}<button>update</button>
+            </li>
+        </ul>
+    </li>
+    {% else %}
+    no devices
+    {% endfor %}
+</ul>
+{% endblock %}
+
+{% block script %}
+<script>
+    // delete the entire device (and all connections)
+    function delete_item(id) {
+        let data = new FormData();
+        data.append("id", id);
+        fetch("{{url_for('crud_gui.delete_device')}}", { method: "POST", body: data })
+            .then(window.location.reload(true));
+    }
+    // change the property to an input field
+    function prep_update(id) {
+        let span = document.getElementById(id);
+
+
+
+    }
+    // send the update to the server
+    function update_item(id) {
+        document.getElementById("inputId").value;
+        let data = new FormData();
+        data.append("id", id);
+        fetch("{{url_for('crud_gui.update_device')}}", { method: "POST", body: data });
+        window.location.reload(true);
+    }
+</script>
+{% endblock %}

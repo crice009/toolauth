@@ -4,20 +4,18 @@ version = "0.1.0"
 description = ""
 authors = ["Corey Rice <crice009@gmail.com>"]
 readme = "README.md"
-packages = [{include = "toolauth", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-quart = "^0.18.0"
-quart-schema = "^0.13.0"
-aioesphomeapi = "^10.13.0"
-db-sqlite3 = "^0.0.1"
+quart = "^0.18.3"
+quart-schema = "^0.14.3"
+aioesphomeapi = "^12.0.0"
+flask-sqlalchemy = "^3.0.2"
 PyYAML = "^6.0"
-uuid = "^1.30"
 
 
 [tool.poetry.group.dev.dependencies]
-pytest-asyncio = "^0.19.0"
+black = {version = "^22.10.0", allow-prereleases = true}
 
 [build-system]
 requires = ["poetry-core"]
