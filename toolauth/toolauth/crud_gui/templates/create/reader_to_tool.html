@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Create New Reader_to_Tool</h1>
+<div style="padding-left:50px;">
+    <form method="POST">
+        <label for="reader">Choose a reader:</label>
+        <select name="reader" id="reader">
+            {% for reader in selectable_readers if selectable_readers %}
+            <option value="{{reader.id}}">{{reader.name}}</option>
+            {% else %}
+            <option value="">no reader devices</option>
+            {% endfor %}
+        </select> <br>
+
+        <label for="tool">Choose a tool:</label>
+        <select name="tool" id="tool">
+            {% for tool in selectable_tools if selectable_tools %}
+            <option value="{{tool.tool_id}}">{{tool.name}}</option>
+            {% else %}
+            <option value="">no tool devices</option>
+            {% endfor %}
+        </select><br>
+        <button type="submit">Create</button>
+    </form>
+</div>
+{% endblock %}

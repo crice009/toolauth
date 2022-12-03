@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>home of hardware API route.</p>
+<p><a href="{{ url_for('hello')}}">return to homepage</a></p>
+<p><a href="{{ url_for('auth_api.simple')}}">simple-version</a></p>
+<p><a href="/docs">go to the docs</a></p>
+
+
+{% endblock %}
