@@ -92,7 +92,7 @@ async def session_event_handler(data: SessionInDB):
         except Exception as e:
             print(e, file=sys.stderr)
             logging.info(e)
-            return abort(500, e)
+            return e
 
     # return to send out a 200 HTTP code
     return "Hello Session"
