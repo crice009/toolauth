@@ -3,7 +3,7 @@ FROM python:3.10 as development_build
 ARG QUART_ENV
 
 ENV QUART_ENV=${QUART_ENV} \
-    QUART_APP=toolauth.api:create_app() \
+    QUART_APP=toolauth:run() \
     PYTHONFAULTHANDLER=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONHASHSEED=random \
@@ -11,7 +11,7 @@ ENV QUART_ENV=${QUART_ENV} \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_VERSION=1.1.13 \
+    POETRY_VERSION=1.2.2 \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=false \
     POETRY_CACHE_DIR='/var/cache/pypoetry' \
@@ -49,7 +49,7 @@ COPY --chown=web:web /src/toolauth /app/toolauth
 
 FROM development_build AS production_build
 
-CMD ["hypercorn", "toolauth.api:create_app()", "-w", "2", "-b", "0.0.0.0:80"]
+CMD ["hypercorn", "toolauth:run()", "-w", "2", "-b", "0.0.0.0:80"]
 
 FROM development_build AS management_build
 ENTRYPOINT ["poetry", "run", "python", "manage.py"]
