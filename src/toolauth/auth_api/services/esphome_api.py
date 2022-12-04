@@ -39,11 +39,6 @@ async def tool_enable(tool, session_id) -> None:
     except:
         # this may be premature - maybe only raise the exception after trying all the listed tools?
         await tool_com_error(base["id"], tool)
-        # raise Exception(
-        #     "Could not connect to ESPHome tool: "
-        #     + base["name"]
-        #     + " During ESPHome auth_enable Native API call."
-        # )
         abort(
             500,  # forbidden HTTP message
             "Could not connect to ESPHome tool: "
@@ -98,13 +93,9 @@ async def other_picked(tool, session_id) -> None:
     try:
         await api.connect(login=True)
     except:
-        # raise Exception(
-        #     "Could not connect to ESPHome tool: "
-        #     + base["name"]
-        #     + " During ESPHome other_picked Native API call."
-        # )
+        # this would be returned to the quart app, as it is the quart app who calls for this...
         abort(
-            500,  # forbidden HTTP message
+            504,  # https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
             "Could not connect to ESPHome tool: "
             + base["name"]
             + " During ESPHome other_picked Native API call."
@@ -149,14 +140,9 @@ async def tool_com_error(reader_id, tool_id) -> None:
     try:
         await api.connect(login=True)
     except:
-        # raise Exception(  # message back to server
-        #     "Could not connect to ESPHome device: "
-        #     + base_name
-        #     + " During ESPHome tool_com_error Native API call, while trying to report error reaching the device:"
-        #     + get_tool_name(tool_id)
-        # )
         abort(
-            500,  # forbidden HTTP message
+            # Cannot reach the ESPHome device needed
+            504,  # https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504
             "Could not connect to ESPHome device: "
             + base_name
             + " During ESPHome tool_com_error Native API call, while trying to report error reaching the device:"
