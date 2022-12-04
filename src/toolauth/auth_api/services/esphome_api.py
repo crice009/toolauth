@@ -1,3 +1,4 @@
+from quart import abort
 from aioesphomeapi.client import APIClient
 from aioesphomeapi.model import UserService, UserServiceArg, UserServiceArgType
 from .getters_setters import (
@@ -38,7 +39,13 @@ async def tool_enable(tool, session_id) -> None:
     except:
         # this may be premature - maybe only raise the exception after trying all the listed tools?
         await tool_com_error(base["id"], tool)
-        raise Exception(
+        # raise Exception(
+        #     "Could not connect to ESPHome tool: "
+        #     + base["name"]
+        #     + " During ESPHome auth_enable Native API call."
+        # )
+        abort(
+            500,  # forbidden HTTP message
             "Could not connect to ESPHome tool: "
             + base["name"]
             + " During ESPHome auth_enable Native API call."
@@ -91,8 +98,14 @@ async def other_picked(tool, session_id) -> None:
     try:
         await api.connect(login=True)
     except:
-        raise Exception(  # message back to server
-            "Could not connect to ESPHome device: "
+        # raise Exception(
+        #     "Could not connect to ESPHome tool: "
+        #     + base["name"]
+        #     + " During ESPHome other_picked Native API call."
+        # )
+        abort(
+            500,  # forbidden HTTP message
+            "Could not connect to ESPHome tool: "
             + base["name"]
             + " During ESPHome other_picked Native API call."
         )
@@ -136,7 +149,14 @@ async def tool_com_error(reader_id, tool_id) -> None:
     try:
         await api.connect(login=True)
     except:
-        raise Exception(  # message back to server
+        # raise Exception(  # message back to server
+        #     "Could not connect to ESPHome device: "
+        #     + base_name
+        #     + " During ESPHome tool_com_error Native API call, while trying to report error reaching the device:"
+        #     + get_tool_name(tool_id)
+        # )
+        abort(
+            500,  # forbidden HTTP message
             "Could not connect to ESPHome device: "
             + base_name
             + " During ESPHome tool_com_error Native API call, while trying to report error reaching the device:"
