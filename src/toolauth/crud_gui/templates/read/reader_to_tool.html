@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='crud.css')}}" />
+{% endblock %}
+
+{% block content %}
+<h1>Reader_to_Tool List</h1>
+<div style="float:right;"><a href="{{ url_for('crud_gui.create_reader_to_tool')}}">create_reader_to_tool</a></div>
+<ul style="padding-left:50px;">
+    {% for reader_to_tool in reader_to_tools if reader_to_tools %}
+    <li>{{ reader_to_tool["reader"]["name"]}} to {{ reader_to_tool["tool"]["name"] }} <button
+            onclick="delete_item({{ reader_to_tool['raw']['id'] }})">delete</button></li>
+    {% else %}
+    no Reader_to_Tool connnections
+    {% endfor %}
+</ul>
+{% endblock %}
+
+{% block script %}
+<script>
+    // delete the reader_to_tool connection
+    function delete_item(id) {
+        let data = new FormData();
+        data.append("id", id);
+        fetch("{{url_for('crud_gui.delete_reader_to_tool')}}", { method: "POST", body: data })
+            .then(window.location.reload(true));
+    } 
+</script>
+{% endblock %}

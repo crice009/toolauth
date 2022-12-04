@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Create New Device</h1>
+
+<form method="POST">
+    <label>name: <input type="text" size="30" name="name" /></label><br>
+    <label>is a 'remote' vacuum: <select name="is_vacuum" id="is_vacuum">
+            <option value="0">NO</option>
+            <option value="1">YES</option>
+        </select>[leave drupal_name blank if yes]</label> <br>
+    <label>drupal_name: <input type="text" size="30" name="drupal_name" />
+        [leave blank if no tool, only reader]</label><br>
+    <!--VVVVVV=================================== checkbox not working... -->
+    <!-- <input type="checkbox" name="has_reader" id="has_reader">
+    <label for="has_reader"> has PN532 Card Reader</label><br> -->
+    <label>has PN532 card reader: <select name="has_reader" id="has_reader">
+            <option value="1">YES</option>
+            <option value="0">NO</option>
+        </select></label> <br>
+    <button type="submit">Create</button>
+</form>
+{% endblock %}

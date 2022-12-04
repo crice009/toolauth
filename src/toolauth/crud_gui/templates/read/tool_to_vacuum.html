@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='crud.css')}}" />
+{% endblock %}
+
+{% block content %}
+<h1>Tool_to_Vacuum List</h1>
+<div style="float:right;"><a href="{{ url_for('crud_gui.create_tool_to_vacuum')}}">create_tool_to_vacuum</a></div>
+<ul style="padding-left:50px;">
+    {% for tool_to_vacuum in tool_to_vacuums if tool_to_vacuums %}
+    <li>{{ tool_to_vacuum["tool"]["name"]}} to {{ tool_to_vacuum["vacuum"]["name"] }}<button
+            onclick="delete_item({{ tool_to_vacuum['raw']['id'] }})">delete</button></li>
+    {% else %}
+    no tool_to_vacuum connections
+    {% endfor %}
+</ul>
+{% endblock %}
+
+{% block script %}
+<script>
+    // delete the tool_to_vacuum connection
+    function delete_item(id) {
+        let data = new FormData();
+        data.append("id", id);
+        fetch("{{url_for('crud_gui.delete_tool_to_vacuum')}}", { method: "POST", body: data })
+            .then(window.location.reload(true));
+    } 
+</script>
+{% endblock %}
