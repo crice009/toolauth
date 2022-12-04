@@ -66,7 +66,7 @@ async def authorization_request(data: AuthReqInDB):
     except Exception as e:
         print(e, file=sys.stderr)
         logging.info(e)
-        return abort(500, e)
+        return e
 
 
 # needs much more definition for the long-term loggging
